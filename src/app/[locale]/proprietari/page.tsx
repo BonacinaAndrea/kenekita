@@ -95,12 +95,9 @@ function MagneticCard({ p, index }: { p: typeof perche[0], index: number }) {
       onMouseEnter={handleMouseEnter}
       onMouseMove={handleMouseMove}
       onMouseLeave={handleMouseLeave}
+      className="relative overflow-hidden rounded-[12px] cursor-default"
       style={{
-        position: 'relative',
         height: 380,
-        overflow: 'hidden',
-        borderRadius: 12,
-        cursor: 'default',
         opacity: inView ? 1 : 0,
         transform: entered ? magnetTransform : entryTransform,
         transition: entered
@@ -110,49 +107,29 @@ function MagneticCard({ p, index }: { p: typeof perche[0], index: number }) {
       }}
     >
       <Image
-        src={p.img}
-        alt={p.title}
-        fill
-        unoptimized
+        src={p.img} alt={p.title} fill unoptimized
+        className="object-cover transition-all duration-[600ms] ease-out"
         style={{
-          objectFit: 'cover',
           transform: hovered ? 'scale(1.08)' : 'scale(1)',
           filter: hovered ? 'brightness(0.35)' : 'brightness(0.6)',
-          transition: 'transform 0.6s ease, filter 0.4s ease',
         }}
       />
-      <div style={{
-        position: 'absolute', inset: 0,
-        background: hovered
+      <div
+        className="absolute inset-0 z-[1] transition-all duration-400"
+        style={{ background: hovered
           ? 'linear-gradient(to top, rgba(5,5,4,0.98) 0%, rgba(5,5,4,0.7) 100%)'
-          : 'linear-gradient(to top, rgba(5,5,4,0.92) 0%, rgba(5,5,4,0.3) 60%, rgba(5,5,4,0.1) 100%)',
-        transition: 'background 0.4s ease',
-        zIndex: 1,
-      }} />
-      <div style={{
-        position: 'absolute', inset: 0, zIndex: 2,
-        display: 'flex', flexDirection: 'column', justifyContent: 'flex-end',
-        padding: '32px 36px',
-        transform: hovered ? 'translateY(-8px)' : 'translateY(0)',
-        transition: 'transform 0.4s ease',
-      }}>
-        <div style={{ width: 24, height: 1, background: '#B8965A', marginBottom: 14 }} />
-        <h3 style={{
-          fontFamily: 'var(--font-playfair)',
-          fontSize: 26,
-          fontWeight: 400,
-          color: '#F5F2EE',
-          marginBottom: 12,
-          lineHeight: 1.2,
-        }}>{p.title}</h3>
-        <p style={{
-          fontSize: 14,
-          color: hovered ? 'rgba(245,242,238,0.85)' : 'rgba(245,242,238,0.55)',
-          lineHeight: 1.75,
-          fontFamily: 'var(--font-raleway)',
-          fontWeight: 300,
-          transition: 'color 0.3s ease',
-        }}>{p.text}</p>
+          : 'linear-gradient(to top, rgba(5,5,4,0.92) 0%, rgba(5,5,4,0.3) 60%, rgba(5,5,4,0.1) 100%)' }}
+      />
+      <div
+        className="absolute inset-0 z-[2] flex flex-col justify-end px-9 py-8 transition-transform duration-400"
+        style={{ transform: hovered ? 'translateY(-8px)' : 'translateY(0)' }}
+      >
+        <div className="w-6 h-px bg-[#B8965A] mb-3.5" />
+        <h3 className="font-playfair text-[26px] font-normal text-[#F5F2EE] mb-3 leading-[1.2]">{p.title}</h3>
+        <p
+          className="text-[14px] leading-[1.75] font-raleway font-light transition-colors duration-300"
+          style={{ color: hovered ? 'rgba(245,242,238,0.85)' : 'rgba(245,242,238,0.55)' }}
+        >{p.text}</p>
       </div>
     </div>
   )
@@ -165,25 +142,40 @@ function ExpandableServiceCard({ s, index, inView }: { s: { title: string, text:
     <div
       onMouseEnter={() => setExpanded(true)}
       onMouseLeave={() => setExpanded(false)}
+      className="relative cursor-default transition-all duration-400"
       style={{
-        position: 'relative',
         padding: expanded ? '48px 52px' : '32px 36px',
         background: expanded ? '#1f1d1a' : '#141412',
         borderLeft: `2px solid ${expanded ? '#B8965A' : 'rgba(184,150,90,0.25)'}`,
-        cursor: 'default',
         opacity: inView ? 1 : 0,
-        transform: inView ? expanded ? 'scale(1.02)' : 'translateY(0)' : 'translateY(20px)',
+        transform: inView ? (expanded ? 'scale(1.02)' : 'translateY(0)') : 'translateY(20px)',
         transition: 'all 0.4s cubic-bezier(0.34,1.2,0.64,1)',
         zIndex: expanded ? 10 : 1,
         boxShadow: expanded ? '0 0 60px rgba(184,150,90,0.12), 0 20px 60px rgba(0,0,0,0.4)' : 'none',
       }}
     >
-      <div style={{ position:'absolute', top:12, right:20, fontFamily:'var(--font-playfair)', fontSize:80, fontWeight:400, color: expanded ? 'rgba(184,150,90,0.12)' : 'rgba(245,242,238,0.04)', lineHeight:1, transition:'color 0.4s', userSelect:'none' }}>
+      <div
+        className="absolute top-3 right-5 font-playfair text-[80px] font-normal leading-none select-none transition-colors duration-400"
+        style={{ color: expanded ? 'rgba(184,150,90,0.12)' : 'rgba(245,242,238,0.04)' }}
+      >
         {String(index + 1).padStart(2, '0')}
       </div>
-      {expanded && <div style={{ position:'absolute', top:0, left:0, right:0, height:1, background:'linear-gradient(to right, #B8965A, transparent)' }} />}
-      <h3 style={{ fontFamily:'var(--font-playfair)', fontSize: expanded ? 22 : 17, fontWeight:400, color: expanded ? '#F5F2EE' : 'rgba(245,242,238,0.8)', marginBottom: expanded ? 16 : 10, lineHeight:1.3, transition:'all 0.4s', textShadow: expanded ? '0 0 40px rgba(184,150,90,0.4)' : 'none', position:'relative', zIndex:1 }}>{s.title}</h3>
-      <p style={{ fontSize: expanded ? 15 : 13, color: expanded ? 'rgba(245,242,238,0.8)' : 'rgba(245,242,238,0.4)', lineHeight:1.75, fontFamily:'var(--font-raleway)', fontWeight:300, transition:'all 0.4s', position:'relative', zIndex:1 }}>{s.text}</p>
+      {expanded && <div className="absolute top-0 left-0 right-0 h-px" style={{ background: 'linear-gradient(to right, #B8965A, transparent)' }} />}
+      <h3
+        className="font-playfair font-normal leading-[1.3] mb-2.5 relative z-[1] transition-all duration-400"
+        style={{
+          fontSize: expanded ? 22 : 17,
+          color: expanded ? '#F5F2EE' : 'rgba(245,242,238,0.8)',
+          textShadow: expanded ? '0 0 40px rgba(184,150,90,0.4)' : 'none',
+        }}
+      >{s.title}</h3>
+      <p
+        className="leading-[1.75] font-raleway font-light relative z-[1] transition-all duration-400"
+        style={{
+          fontSize: expanded ? 15 : 13,
+          color: expanded ? 'rgba(245,242,238,0.8)' : 'rgba(245,242,238,0.4)',
+        }}
+      >{s.text}</p>
     </div>
   )
 }
@@ -205,83 +197,101 @@ export default function ProprietariPage() {
   const { ref: stepsRef, inView: stepsInView } = useInView(0.1)
 
   return (
-    <main style={{ background: '#0F0F0E', minHeight: '100vh', paddingTop: 100 }}>
+    <main className="bg-[#0F0F0E] min-h-screen pt-[100px]">
 
-      {/* Intro — foto sx, testo dx */}
-      <section ref={heroRef} style={{ padding: '80px 5%' }}>
-        <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 80, alignItems: 'center' }}>
-          <div style={{
-            position: 'relative', aspectRatio: '4/5', overflow: 'hidden', borderRadius: 10,
-            opacity: heroInView ? 1 : 0,
-            transform: heroInView ? 'translateX(0)' : 'translateX(-60px)',
-            transition: 'opacity 1s, transform 1s',
-          }}>
-            <Image src="/images/proprietari/hero.jpg" alt="Proprietari Kenekita" fill unoptimized style={{ objectFit: 'cover' }} />
+      {/* Intro — mobile: photo top, text below; md+: 2-col */}
+      <section ref={heroRef} className="px-[5%] py-[80px]">
+        <div className="flex flex-col gap-12 md:grid md:grid-cols-2 md:gap-20 md:items-center">
+          <div
+            className="relative overflow-hidden rounded-[10px] w-full"
+            style={{
+              aspectRatio: '4/5',
+              opacity: heroInView ? 1 : 0,
+              transform: heroInView ? 'translateX(0)' : 'translateX(-60px)',
+              transition: 'opacity 1s, transform 1s',
+            }}
+          >
+            <Image src="/images/proprietari/hero.jpg" alt="Proprietari Kenekita" fill unoptimized className="object-cover" />
           </div>
-          <div style={{
-            opacity: heroInView ? 1 : 0,
-            transform: heroInView ? 'translateX(0)' : 'translateX(60px)',
-            transition: 'opacity 1s 0.2s, transform 1s 0.2s',
-          }}>
-            <p style={{ fontSize: 11, fontWeight: 600, letterSpacing: '0.35em', textTransform: 'uppercase', color: '#B8965A', marginBottom: 20, fontFamily: 'var(--font-raleway)' }}>Per i Proprietari</p>
-            <h1 style={{ fontFamily: 'var(--font-playfair)', fontSize: 'clamp(32px,4vw,56px)', fontWeight: 400, color: '#F5F2EE', lineHeight: 1.15, marginBottom: 28 }}>
-              Affida la Tua Casa<br /><em style={{ fontStyle: 'italic', color: '#E8DDD0' }}>alle Mani Giuste</em>
+          <div
+            style={{
+              opacity: heroInView ? 1 : 0,
+              transform: heroInView ? 'translateX(0)' : 'translateX(60px)',
+              transition: 'opacity 1s 0.2s, transform 1s 0.2s',
+            }}
+          >
+            <p className="text-[11px] font-semibold tracking-[0.35em] uppercase text-[#B8965A] mb-5 font-raleway">Per i Proprietari</p>
+            <h1 className="font-playfair font-normal text-[#F5F2EE] leading-[1.15] mb-7 text-[clamp(28px,4vw,56px)]">
+              Affida la Tua Casa<br /><em className="italic text-[#E8DDD0]">alle Mani Giuste</em>
             </h1>
-            <p style={{ fontSize: 17, color: 'rgba(245,242,238,0.6)', lineHeight: 1.9, fontFamily: 'var(--font-raleway)', fontWeight: 300 }}>
+            <p className="text-[16px] md:text-[17px] text-[rgba(245,242,238,0.6)] leading-[1.9] font-raleway font-light">
               Trasforma la tua proprietà in una fonte di reddito sicura e costante. Noi ci occupiamo di tutto, tu ti godi i guadagni.
             </p>
           </div>
         </div>
       </section>
 
-      {/* Perché Kenekita — 4 card magnetiche */}
-      <section style={{ padding: '80px 5%', background: '#0a0908' }}>
-        <div style={{ textAlign: 'center', marginBottom: 60 }}>
-          <p style={{ fontSize: 11, fontWeight: 600, letterSpacing: '0.35em', textTransform: 'uppercase', color: '#B8965A', marginBottom: 16, fontFamily: 'var(--font-raleway)' }}>Perché Scegliere Kenekita</p>
-          <h2 style={{ fontFamily: 'var(--font-playfair)', fontSize: 'clamp(28px,4vw,52px)', fontWeight: 400, color: '#F5F2EE', lineHeight: 1.2 }}>I vantaggi di lavorare con noi</h2>
+      {/* Perché Kenekita — mobile: 1 col; sm: 2 col; lg: 4 col */}
+      <section className="px-[5%] py-[80px] bg-[#0a0908]">
+        <div className="text-center mb-[60px]">
+          <p className="text-[11px] font-semibold tracking-[0.35em] uppercase text-[#B8965A] mb-4 font-raleway">Perché Scegliere Kenekita</p>
+          <h2 className="font-playfair font-normal text-[#F5F2EE] leading-[1.2] text-[clamp(24px,4vw,52px)]">I vantaggi di lavorare con noi</h2>
         </div>
-        <div style={{ display: 'grid', gridTemplateColumns: 'repeat(4, 1fr)', gap: 20 }}>
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-5">
           {perche.map((p, i) => <MagneticCard key={p.title} p={p} index={i} />)}
         </div>
       </section>
 
-      {/* Servizi */}
-      <section ref={serviziRef} style={{ padding: '100px 5%' }}>
-        <div style={{ textAlign: 'center', marginBottom: 60, opacity: serviziInView ? 1 : 0, transform: serviziInView ? 'translateY(0)' : 'translateY(30px)', transition: 'opacity 0.7s, transform 0.7s' }}>
-          <p style={{ fontSize: 11, fontWeight: 600, letterSpacing: '0.35em', textTransform: 'uppercase', color: '#B8965A', marginBottom: 16, fontFamily: 'var(--font-raleway)' }}>I Nostri Servizi</p>
-          <h2 style={{ fontFamily: 'var(--font-playfair)', fontSize: 'clamp(28px,4vw,52px)', fontWeight: 400, color: '#F5F2EE', lineHeight: 1.2, marginBottom: 16 }}>Gestione completa della tua proprietà</h2>
-          <p style={{ fontSize: 16, color: 'rgba(245,242,238,0.5)', fontFamily: 'var(--font-raleway)', fontWeight: 300 }}>Affida a noi la gestione e goditi i guadagni senza pensieri</p>
+      {/* Servizi — mobile: 1 col; md: 2 col */}
+      <section ref={serviziRef} className="px-[5%] py-[100px]">
+        <div
+          className="text-center mb-[60px]"
+          style={{ opacity: serviziInView ? 1 : 0, transform: serviziInView ? 'translateY(0)' : 'translateY(30px)', transition: 'opacity 0.7s, transform 0.7s' }}
+        >
+          <p className="text-[11px] font-semibold tracking-[0.35em] uppercase text-[#B8965A] mb-4 font-raleway">I Nostri Servizi</p>
+          <h2 className="font-playfair font-normal text-[#F5F2EE] leading-[1.2] mb-4 text-[clamp(24px,4vw,52px)]">Gestione completa della tua proprietà</h2>
+          <p className="text-[16px] text-[rgba(245,242,238,0.5)] font-raleway font-light">Affida a noi la gestione e goditi i guadagni senza pensieri</p>
         </div>
-        <div style={{ display:'grid', gridTemplateColumns:'repeat(2,1fr)', gap:2 }}>
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-[2px]">
           {servizi.map((s, i) => (
             <ExpandableServiceCard key={s.title} s={s} index={i} inView={serviziInView} />
           ))}
         </div>
       </section>
 
-      {/* Come funziona */}
-      <section ref={stepsRef} style={{ padding: '100px 5%', background: '#0a0908' }}>
-        <div style={{ textAlign: 'center', marginBottom: 60, opacity: stepsInView ? 1 : 0, transform: stepsInView ? 'translateY(0)' : 'translateY(30px)', transition: 'opacity 0.7s, transform 0.7s' }}>
-          <p style={{ fontSize: 11, fontWeight: 600, letterSpacing: '0.35em', textTransform: 'uppercase', color: '#B8965A', marginBottom: 16, fontFamily: 'var(--font-raleway)' }}>Come Funziona</p>
-          <h2 style={{ fontFamily: 'var(--font-playfair)', fontSize: 'clamp(28px,4vw,52px)', fontWeight: 400, color: '#F5F2EE', lineHeight: 1.2 }}>Collabora con noi alla valorizzazione<br />della tua proprietà</h2>
+      {/* Come funziona — mobile: 1 col; sm: 2 col; lg: 4 col */}
+      <section ref={stepsRef} className="px-[5%] py-[100px] bg-[#0a0908]">
+        <div
+          className="text-center mb-[60px]"
+          style={{ opacity: stepsInView ? 1 : 0, transform: stepsInView ? 'translateY(0)' : 'translateY(30px)', transition: 'opacity 0.7s, transform 0.7s' }}
+        >
+          <p className="text-[11px] font-semibold tracking-[0.35em] uppercase text-[#B8965A] mb-4 font-raleway">Come Funziona</p>
+          <h2 className="font-playfair font-normal text-[#F5F2EE] leading-[1.2] text-[clamp(24px,4vw,52px)]">
+            Collabora con noi alla valorizzazione<br className="hidden sm:block" />della tua proprietà
+          </h2>
         </div>
-        <div style={{ display: 'grid', gridTemplateColumns: 'repeat(4, 1fr)', gap: 16 }}>
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
           {steps.map((s, i) => {
             const fromRight = i % 2 === 0
             return (
-              <div key={s.n} style={{
-                background: '#141412', padding: '40px 32px',
-                opacity: stepsInView ? 1 : 0,
-                transform: stepsInView ? 'translateX(0)' : `translateX(${fromRight ? '80px' : '-80px'})`,
-                transition: `opacity 1.4s ${i * 0.25}s, transform 1.4s ${i * 0.25}s cubic-bezier(0.34,1.2,0.64,1)`,
-              }}>
-                <div style={{ position: 'relative', aspectRatio: '4/3', overflow: 'hidden', borderRadius: 6, marginBottom: 24 }}>
-                  <Image src={`/images/proprietari/step-0${i + 1}.jpg`} alt={s.title} fill unoptimized style={{ objectFit: 'cover' }} />
-                  <div style={{ position: 'absolute', inset: 0, background: 'linear-gradient(to top, rgba(0,0,0,0.5) 0%, transparent 60%)', zIndex: 1 }} />
-                  <div style={{ position: 'absolute', bottom: 12, left: 16, zIndex: 2, fontFamily: 'var(--font-playfair)', fontSize: 40, fontWeight: 400, color: 'rgba(184,150,90,0.6)', lineHeight: 1 }}>{s.n}</div>
+              <div
+                key={s.n}
+                className="bg-[#141412] px-8 py-10"
+                style={{
+                  opacity: stepsInView ? 1 : 0,
+                  transform: stepsInView ? 'translateX(0)' : `translateX(${fromRight ? '80px' : '-80px'})`,
+                  transition: `opacity 1.4s ${i * 0.25}s, transform 1.4s ${i * 0.25}s cubic-bezier(0.34,1.2,0.64,1)`,
+                }}
+              >
+                <div className="relative overflow-hidden rounded-[6px] mb-6" style={{ aspectRatio: '4/3' }}>
+                  <Image src={`/images/proprietari/step-0${i + 1}.jpg`} alt={s.title} fill unoptimized className="object-cover" />
+                  <div className="absolute inset-0 z-[1]" style={{ background: 'linear-gradient(to top, rgba(0,0,0,0.5) 0%, transparent 60%)' }} />
+                  <div className="absolute bottom-3 left-4 z-[2] font-playfair text-[40px] font-normal text-[rgba(184,150,90,0.6)] leading-none">
+                    {s.n}
+                  </div>
                 </div>
-                <h3 style={{ fontFamily: 'var(--font-playfair)', fontSize: 18, fontWeight: 400, color: '#F5F2EE', marginBottom: 14, lineHeight: 1.3 }}>{s.title}</h3>
-                <p style={{ fontSize: 14, color: 'rgba(245,242,238,0.55)', lineHeight: 1.75, fontFamily: 'var(--font-raleway)' }}>{s.text}</p>
+                <h3 className="font-playfair text-[18px] font-normal text-[#F5F2EE] mb-3.5 leading-[1.3]">{s.title}</h3>
+                <p className="text-[14px] text-[rgba(245,242,238,0.55)] leading-[1.75] font-raleway">{s.text}</p>
               </div>
             )
           })}
@@ -289,15 +299,18 @@ export default function ProprietariPage() {
       </section>
 
       {/* CTA */}
-      <section style={{ padding: '100px 5%', textAlign: 'center' }}>
-        <div>
-          <p style={{ fontSize: 11, fontWeight: 600, letterSpacing: '0.35em', textTransform: 'uppercase', color: '#B8965A', marginBottom: 16, fontFamily: 'var(--font-raleway)' }}>Inizia Subito</p>
-          <h2 style={{ fontFamily: 'var(--font-playfair)', fontSize: 'clamp(28px,4vw,52px)', fontWeight: 400, color: '#F5F2EE', lineHeight: 1.2, marginBottom: 16 }}>Compila il form e ti ricontatteremo<br />entro 24 ore</h2>
-          <p style={{ fontSize: 16, color: 'rgba(245,242,238,0.5)', fontFamily: 'var(--font-raleway)', fontWeight: 300, marginBottom: 40 }}>Consulenza gratuita e senza impegno</p>
-          <Link href="/contatti" style={{ background: '#B8965A', color: '#0F0F0E', fontSize: 12, fontWeight: 600, letterSpacing: '0.2em', textTransform: 'uppercase', padding: '16px 48px', textDecoration: 'none', display: 'inline-block', fontFamily: 'var(--font-raleway)' }}>
-            Richiedi Consulenza Gratuita
-          </Link>
-        </div>
+      <section className="px-[5%] py-[100px] text-center">
+        <p className="text-[11px] font-semibold tracking-[0.35em] uppercase text-[#B8965A] mb-4 font-raleway">Inizia Subito</p>
+        <h2 className="font-playfair font-normal text-[#F5F2EE] leading-[1.2] mb-4 text-[clamp(24px,4vw,52px)]">
+          Compila il form e ti ricontatteremo<br className="hidden sm:block" />entro 24 ore
+        </h2>
+        <p className="text-[16px] text-[rgba(245,242,238,0.5)] font-raleway font-light mb-10">Consulenza gratuita e senza impegno</p>
+        <Link
+          href="/contatti"
+          className="bg-[#B8965A] text-[#0F0F0E] text-[12px] font-semibold tracking-[0.2em] uppercase px-12 py-4 no-underline inline-block font-raleway transition-opacity hover:opacity-90"
+        >
+          Richiedi Consulenza Gratuita
+        </Link>
       </section>
 
     </main>

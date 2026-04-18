@@ -34,169 +34,116 @@ export default function Navbar() {
 
   return (
     <>
-      <header style={{
-        position: 'fixed',
-        top: 0, left: 0, right: 0,
-        zIndex: 200,
-        padding: scrolled ? '16px 5%' : '28px 5%',
-        display: 'flex',
-        alignItems: 'center',
-        justifyContent: 'space-between',
-        background: scrolled ? 'rgba(10,9,8,0.96)' : 'transparent',
-        backdropFilter: scrolled ? 'blur(12px)' : 'none',
-        borderBottom: scrolled ? '1px solid rgba(245,242,238,0.06)' : '1px solid transparent',
-        transition: 'padding 0.4s ease, background 0.4s ease, border-color 0.4s ease',
-      }}>
+      <header
+        className={[
+          'fixed top-0 left-0 right-0 z-[200] flex items-center justify-between transition-all duration-400',
+          scrolled ? 'px-[5%] py-4 bg-[rgba(10,9,8,0.96)] backdrop-blur-[12px] border-b border-[rgba(245,242,238,0.06)]' : 'px-[5%] py-7 bg-transparent border-b border-transparent',
+        ].join(' ')}
+      >
         {/* Logo */}
-        <Link href="/" style={{ fontFamily: 'var(--font-bbh)', fontSize: 20, fontWeight: 400, letterSpacing: '0.08em', color: '#F5F2EE', textDecoration: 'none' }}>
+        <Link
+          href="/"
+          className="font-bbh text-[20px] font-normal tracking-[0.08em] text-[#F5F2EE] no-underline"
+        >
           KeneKita
         </Link>
 
-        {/* Desktop nav */}
-        <ul style={{ display: 'flex', gap: 32, listStyle: 'none', margin: 0, padding: 0 }} className="nav-desktop">
+        {/* Desktop nav — hidden on mobile */}
+        <ul className="hidden md:flex gap-8 list-none m-0 p-0">
           {links.map(({ label, href }) => (
             <li key={label}>
               <Link
                 href={href}
-                style={{
-                  fontSize: 11,
-                  fontWeight: 500,
-                  letterSpacing: '0.15em',
-                  textTransform: 'uppercase',
-                  color: isActive(href) ? '#B8965A' : 'rgba(245,242,238,0.75)',
-                  textDecoration: 'none',
-                  position: 'relative',
-                  paddingBottom: 2,
-                  transition: 'color 0.2s',
-                }}
+                className={[
+                  'text-[11px] font-medium tracking-[0.15em] uppercase no-underline relative pb-0.5 transition-colors duration-200 font-raleway',
+                  isActive(href) ? 'text-[#B8965A]' : 'text-[rgba(245,242,238,0.75)] hover:text-[#F5F2EE]',
+                ].join(' ')}
               >
                 {label}
                 {isActive(href) && (
-                  <span style={{ position: 'absolute', bottom: -4, left: 0, right: 0, height: 1, background: '#B8965A' }} />
+                  <span className="absolute -bottom-1 left-0 right-0 h-px bg-[#B8965A]" />
                 )}
               </Link>
             </li>
           ))}
         </ul>
 
-        {/* Desktop CTA */}
-        <div style={{ display: 'flex', alignItems: 'center', gap: 16 }} className="nav-desktop">
+        {/* Desktop CTA — hidden on mobile */}
+        <div className="hidden md:flex items-center gap-4">
           <Link
             href="/contatti"
-            style={{
-              fontSize: 11, fontWeight: 600, letterSpacing: '0.15em', textTransform: 'uppercase',
-              color: '#B8965A', textDecoration: 'none',
-              border: '1px solid rgba(184,150,90,0.4)', padding: '10px 20px',
-              transition: 'background 0.2s, color 0.2s',
-            }}
-            onMouseEnter={e => { (e.currentTarget as HTMLElement).style.background = '#B8965A'; (e.currentTarget as HTMLElement).style.color = '#0F0F0E' }}
-            onMouseLeave={e => { (e.currentTarget as HTMLElement).style.background = 'transparent'; (e.currentTarget as HTMLElement).style.color = '#B8965A' }}
+            className="text-[11px] font-semibold tracking-[0.15em] uppercase text-[#B8965A] no-underline border border-[rgba(184,150,90,0.4)] px-5 py-[10px] transition-all duration-200 hover:bg-[#B8965A] hover:text-[#0F0F0E] font-raleway"
           >
             Contatti
           </Link>
         </div>
 
-        {/* Hamburger button */}
+        {/* Hamburger — visible only on mobile */}
         <button
           onClick={() => setMenuOpen(o => !o)}
           aria-label={menuOpen ? 'Chiudi menu' : 'Apri menu'}
           aria-expanded={menuOpen}
-          className="nav-mobile"
-          style={{
-            background: 'none', border: 'none', cursor: 'pointer',
-            padding: 8, display: 'flex', flexDirection: 'column',
-            gap: 5, alignItems: 'flex-end',
-          }}
+          className="md:hidden flex flex-col gap-[5px] items-end p-2 bg-transparent border-none cursor-pointer"
         >
-          <span style={{
-            display: 'block', height: 1.5, background: '#F5F2EE',
-            width: menuOpen ? 24 : 24,
-            transform: menuOpen ? 'translateY(6.5px) rotate(45deg)' : 'none',
-            transition: 'transform 0.3s ease',
-          }} />
-          <span style={{
-            display: 'block', height: 1.5, background: '#F5F2EE',
-            width: menuOpen ? 0 : 18,
-            opacity: menuOpen ? 0 : 1,
-            transition: 'width 0.3s ease, opacity 0.2s ease',
-          }} />
-          <span style={{
-            display: 'block', height: 1.5, background: '#F5F2EE',
-            width: menuOpen ? 24 : 24,
-            transform: menuOpen ? 'translateY(-6.5px) rotate(-45deg)' : 'none',
-            transition: 'transform 0.3s ease',
-          }} />
+          <span className={[
+            'block h-[1.5px] w-6 bg-[#F5F2EE] transition-transform duration-300',
+            menuOpen ? 'translate-y-[6.5px] rotate-45' : '',
+          ].join(' ')} />
+          <span className={[
+            'block h-[1.5px] bg-[#F5F2EE] transition-all duration-300',
+            menuOpen ? 'w-0 opacity-0' : 'w-[18px] opacity-100',
+          ].join(' ')} />
+          <span className={[
+            'block h-[1.5px] w-6 bg-[#F5F2EE] transition-transform duration-300',
+            menuOpen ? '-translate-y-[6.5px] -rotate-45' : '',
+          ].join(' ')} />
         </button>
       </header>
 
-      {/* Mobile overlay menu */}
+      {/* Mobile fullscreen overlay — visible only on mobile */}
       <div
-        className="nav-mobile"
-        style={{
-          position: 'fixed', inset: 0, zIndex: 190,
-          background: 'rgba(10,9,8,0.98)',
-          backdropFilter: 'blur(16px)',
-          display: 'flex', flexDirection: 'column',
-          justifyContent: 'center', alignItems: 'center',
-          gap: 0,
-          opacity: menuOpen ? 1 : 0,
-          pointerEvents: menuOpen ? 'all' : 'none',
-          transition: 'opacity 0.4s ease',
-        }}
+        className={[
+          'md:hidden fixed inset-0 z-[190] flex flex-col justify-center items-center transition-opacity duration-400',
+          menuOpen ? 'opacity-100 pointer-events-auto' : 'opacity-0 pointer-events-none',
+        ].join(' ')}
+        style={{ background: 'rgba(10,9,8,0.98)', backdropFilter: 'blur(16px)' }}
       >
-        <nav style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: 8, width: '100%', padding: '0 5%' }}>
+        <nav className="flex flex-col items-center gap-2 w-full px-[5%]">
           {links.map(({ label, href }, i) => (
             <Link
               key={label}
               href={href}
-              style={{
-                fontFamily: 'var(--font-playfair)',
-                fontSize: 'clamp(28px, 8vw, 48px)',
-                fontWeight: 400,
-                color: isActive(href) ? '#B8965A' : '#F5F2EE',
-                textDecoration: 'none',
-                letterSpacing: '0.02em',
-                lineHeight: 1.4,
-                opacity: menuOpen ? 1 : 0,
-                transform: menuOpen ? 'translateY(0)' : 'translateY(20px)',
-                transition: `opacity 0.5s ${0.1 + i * 0.07}s, transform 0.5s ${0.1 + i * 0.07}s`,
-                display: 'block',
-                textAlign: 'center',
-                padding: '8px 0',
-              }}
+              className={[
+                'font-playfair font-normal text-[clamp(28px,8vw,48px)] no-underline tracking-[0.02em] leading-[1.4] text-center block py-2 transition-all duration-500',
+                isActive(href) ? 'text-[#B8965A]' : 'text-[#F5F2EE]',
+                menuOpen ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-5',
+              ].join(' ')}
+              style={{ transitionDelay: menuOpen ? `${0.1 + i * 0.07}s` : '0s' }}
             >
               {label}
             </Link>
           ))}
-          <div style={{
-            width: 40, height: 1, background: 'rgba(184,150,90,0.4)', margin: '24px 0',
-            opacity: menuOpen ? 1 : 0, transition: 'opacity 0.5s 0.4s',
-          }} />
+
+          <div
+            className={[
+              'w-10 h-px bg-[rgba(184,150,90,0.4)] my-6 transition-opacity duration-500',
+              menuOpen ? 'opacity-100' : 'opacity-0',
+            ].join(' ')}
+            style={{ transitionDelay: menuOpen ? '0.4s' : '0s' }}
+          />
+
           <Link
             href="/contatti"
-            style={{
-              background: '#B8965A', color: '#0F0F0E',
-              fontSize: 11, fontWeight: 700, letterSpacing: '0.22em', textTransform: 'uppercase',
-              padding: '16px 48px', textDecoration: 'none',
-              fontFamily: 'var(--font-raleway)',
-              opacity: menuOpen ? 1 : 0,
-              transform: menuOpen ? 'translateY(0)' : 'translateY(20px)',
-              transition: 'opacity 0.5s 0.42s, transform 0.5s 0.42s',
-            }}
+            className={[
+              'bg-[#B8965A] text-[#0F0F0E] text-[11px] font-bold tracking-[0.22em] uppercase px-12 py-4 no-underline font-raleway transition-all duration-500',
+              menuOpen ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-5',
+            ].join(' ')}
+            style={{ transitionDelay: menuOpen ? '0.42s' : '0s' }}
           >
             Contatti
           </Link>
         </nav>
       </div>
-
-      <style>{`
-        .nav-desktop { display: flex !important; }
-        .nav-mobile { display: none !important; }
-        @media (max-width: 768px) {
-          .nav-desktop { display: none !important; }
-          .nav-mobile { display: flex !important; }
-        }
-      `}</style>
     </>
   )
 }

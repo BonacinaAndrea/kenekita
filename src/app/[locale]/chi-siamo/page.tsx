@@ -83,12 +83,9 @@ function ValoreCard({ v, index }: { v: typeof valori[0], index: number }) {
       onMouseEnter={handleMouseEnter}
       onMouseMove={handleMouseMove}
       onMouseLeave={handleMouseLeave}
+      className="relative overflow-hidden rounded-[10px] cursor-default"
       style={{
-        position: 'relative',
         height: 440,
-        overflow: 'hidden',
-        borderRadius: 10,
-        cursor: 'default',
         opacity: inView ? 1 : 0,
         transform: entered ? magnetTransform : entryTransform,
         transition: entered
@@ -97,12 +94,13 @@ function ValoreCard({ v, index }: { v: typeof valori[0], index: number }) {
         willChange: 'transform',
       }}
     >
-      <Image src={v.img} alt={v.title} fill unoptimized style={{ objectFit: 'cover' }} />
-      <div style={{ position: 'absolute', inset: 0, background: 'linear-gradient(to top, rgba(5,5,4,0.96) 0%, rgba(5,5,4,0.45) 55%, rgba(5,5,4,0.1) 100%)', zIndex: 1 }} />
-      <div style={{ position: 'absolute', bottom: 0, left: 0, right: 0, zIndex: 2, padding: '28px 32px' }}>
-        <div style={{ width: 24, height: 1, background: '#B8965A', marginBottom: 12 }} />
-        <h3 style={{ fontFamily: 'var(--font-playfair)', fontSize: 26, fontWeight: 400, color: '#F5F2EE', marginBottom: 10, lineHeight: 1.2 }}>{v.title}</h3>
-        <p style={{ fontSize: 13, color: 'rgba(245,242,238,0.65)', lineHeight: 1.75, fontFamily: 'var(--font-raleway)', fontWeight: 300 }}>{v.text}</p>
+      <Image src={v.img} alt={v.title} fill unoptimized className="object-cover" />
+      <div className="absolute inset-0 z-[1]"
+        style={{ background: 'linear-gradient(to top, rgba(5,5,4,0.96) 0%, rgba(5,5,4,0.45) 55%, rgba(5,5,4,0.1) 100%)' }} />
+      <div className="absolute bottom-0 left-0 right-0 z-[2] px-8 py-7">
+        <div className="w-6 h-px bg-[#B8965A] mb-3" />
+        <h3 className="font-playfair text-[26px] font-normal text-[#F5F2EE] mb-2.5 leading-[1.2]">{v.title}</h3>
+        <p className="text-[13px] text-[rgba(245,242,238,0.65)] leading-[1.75] font-raleway font-light">{v.text}</p>
       </div>
     </div>
   )
@@ -119,33 +117,42 @@ export default function ChiSiamoPage() {
   }, [])
 
   return (
-    <main style={{ background: '#0F0F0E', minHeight: '100vh', paddingTop: 100 }}>
+    <main className="bg-[#0F0F0E] min-h-screen pt-[100px]">
 
-      {/* Storia — foto sx, testo dx */}
-      <section ref={storyRef} style={{ padding: '80px 5%' }}>
-        <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 80, alignItems: 'center', maxWidth: 1300, margin: '0 auto' }}>
-          <div style={{
-            position: 'relative',
-            aspectRatio: '4/5',
-            overflow: 'hidden',
-            borderRadius: 10,
-            opacity: storyInView ? 1 : 0,
-            transform: storyInView ? 'translateX(0)' : 'translateX(-60px)',
-            transition: 'opacity 1s, transform 1s',
-          }}>
-            <Image src="/images/chi-siamo/team.jpg" alt="Il Team Kenekita" fill unoptimized style={{ objectFit: 'cover' }} />
+      {/* Storia — mobile: photo top, text below; md+: 2-col side by side */}
+      <section ref={storyRef} className="px-[5%] py-[80px]">
+        <div className="flex flex-col gap-12 md:grid md:grid-cols-2 md:gap-20 md:items-center max-w-[1300px] mx-auto">
+          {/* Photo */}
+          <div
+            className="relative overflow-hidden rounded-[10px] w-full"
+            style={{
+              aspectRatio: '4/5',
+              opacity: storyInView ? 1 : 0,
+              transform: storyInView ? 'translateX(0)' : 'translateX(-60px)',
+              transition: 'opacity 1s, transform 1s',
+            }}
+          >
+            <Image src="/images/chi-siamo/team.jpg" alt="Il Team Kenekita" fill unoptimized className="object-cover" />
           </div>
-          <div style={{
-            opacity: storyInView ? 1 : 0,
-            transform: storyInView ? 'translateX(0)' : 'translateX(60px)',
-            transition: 'opacity 1s 0.2s, transform 1s 0.2s',
-          }}>
-            <p style={{ fontSize: 11, fontWeight: 600, letterSpacing: '0.35em', textTransform: 'uppercase', color: '#B8965A', marginBottom: 20, fontFamily: 'var(--font-raleway)' }}>La Nostra Storia</p>
-            <h2 style={{ fontFamily: 'var(--font-playfair)', fontSize: 'clamp(32px,4vw,56px)', fontWeight: 400, color: '#F5F2EE', marginBottom: 32, lineHeight: 1.15 }}>Nata nel 2019</h2>
-            <p style={{ fontSize: 17, color: 'rgba(245,242,238,0.6)', lineHeight: 1.9, marginBottom: 24, fontFamily: 'var(--font-raleway)', fontWeight: 300 }}>
-              Nata nel 2019, la nostra azienda trae origine dall'esperienza decennale dei suoi fondatori nel campo della gestione immobiliare. Siamo specializzati nella gestione di proprietà immobiliari di terzi, concentrando il nostro expertise sulle locazioni turistiche brevi.
+
+          {/* Text */}
+          <div
+            style={{
+              opacity: storyInView ? 1 : 0,
+              transform: storyInView ? 'translateX(0)' : 'translateX(60px)',
+              transition: 'opacity 1s 0.2s, transform 1s 0.2s',
+            }}
+          >
+            <p className="text-[11px] font-semibold tracking-[0.35em] uppercase text-[#B8965A] mb-5 font-raleway">
+              La Nostra Storia
             </p>
-            <p style={{ fontSize: 17, color: 'rgba(245,242,238,0.6)', lineHeight: 1.9, fontFamily: 'var(--font-raleway)', fontWeight: 300 }}>
+            <h2 className="font-playfair font-normal text-[#F5F2EE] mb-8 leading-[1.15] text-[clamp(28px,4vw,56px)]">
+              Nata nel 2019
+            </h2>
+            <p className="text-[16px] md:text-[17px] text-[rgba(245,242,238,0.6)] leading-[1.9] mb-6 font-raleway font-light">
+              Nata nel 2019, la nostra azienda trae origine dall&apos;esperienza decennale dei suoi fondatori nel campo della gestione immobiliare. Siamo specializzati nella gestione di proprietà immobiliari di terzi, concentrando il nostro expertise sulle locazioni turistiche brevi.
+            </p>
+            <p className="text-[16px] md:text-[17px] text-[rgba(245,242,238,0.6)] leading-[1.9] font-raleway font-light">
               Dalle affascinanti ville con vista sul mare cristallino, agli accoglienti appartamenti nel cuore delle storiche cittadine sarde, offriamo una gamma di opzioni per adattarsi ad ogni esigenza e desiderio.
             </p>
           </div>
@@ -153,29 +160,36 @@ export default function ChiSiamoPage() {
       </section>
 
       {/* Valori */}
-      <section style={{ padding: '60px 5% 100px' }}>
-        <div style={{ textAlign: 'center', marginBottom: 70 }}>
-          <p style={{ fontSize: 11, fontWeight: 600, letterSpacing: '0.35em', textTransform: 'uppercase', color: '#B8965A', marginBottom: 16, fontFamily: 'var(--font-raleway)' }}>Perché prenotare con noi</p>
-          <h2 style={{ fontFamily: 'var(--font-playfair)', fontSize: 'clamp(28px,4vw,52px)', fontWeight: 400, color: '#F5F2EE', lineHeight: 1.2 }}>
-            Ogni dettaglio è pensato per offrirti<br />un'esperienza unica e indimenticabile
+      <section className="px-[5%] pt-[60px] pb-[100px]">
+        <div className="text-center mb-[70px]">
+          <p className="text-[11px] font-semibold tracking-[0.35em] uppercase text-[#B8965A] mb-4 font-raleway">
+            Perché prenotare con noi
+          </p>
+          <h2 className="font-playfair font-normal text-[#F5F2EE] leading-[1.2] text-[clamp(24px,4vw,52px)]">
+            Ogni dettaglio è pensato per offrirti<br className="hidden sm:block" />
+            un&apos;esperienza unica e indimenticabile
           </h2>
         </div>
-        <div style={{ display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', gap: 20, maxWidth: 1300, margin: '0 auto' }}>
+        {/* Mobile: 1 col; sm: 2 col; lg: 3 col */}
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5 max-w-[1300px] mx-auto">
           {valori.map((v, i) => <ValoreCard key={v.title} v={v} index={i} />)}
         </div>
       </section>
 
       {/* Missione */}
-      <section style={{ padding: '100px 5%', background: '#0a0908', textAlign: 'center' }}>
-        <div style={{ maxWidth: 800, margin: '0 auto' }}>
-          <p style={{ fontSize: 11, fontWeight: 600, letterSpacing: '0.35em', textTransform: 'uppercase', color: '#B8965A', marginBottom: 20, fontFamily: 'var(--font-raleway)' }}>La nostra Missione</p>
-          <h2 style={{ fontFamily: 'var(--font-playfair)', fontSize: 'clamp(28px,4vw,52px)', fontWeight: 400, color: '#F5F2EE', marginBottom: 32, lineHeight: 1.2 }}>
-            Rendere ogni soggiorno in Sardegna<br /><em style={{ fontStyle: 'italic', color: '#E8DDD0' }}>un'esperienza eccezionale</em>
-          </h2>
-          <p style={{ fontSize: 17, color: 'rgba(245,242,238,0.6)', lineHeight: 1.9, marginBottom: 24, fontFamily: 'var(--font-raleway)', fontWeight: 300 }}>
-            In KeneKita, la nostra missione è semplice ma fondamentale: rendere ogni soggiorno in Sardegna un'esperienza eccezionale e indimenticabile.
+      <section className="px-[5%] py-[100px] bg-[#0a0908] text-center">
+        <div className="max-w-[800px] mx-auto">
+          <p className="text-[11px] font-semibold tracking-[0.35em] uppercase text-[#B8965A] mb-5 font-raleway">
+            La nostra Missione
           </p>
-          <p style={{ fontSize: 17, color: 'rgba(245,242,238,0.6)', lineHeight: 1.9, fontFamily: 'var(--font-raleway)', fontWeight: 300 }}>
+          <h2 className="font-playfair font-normal text-[#F5F2EE] mb-8 leading-[1.2] text-[clamp(24px,4vw,52px)]">
+            Rendere ogni soggiorno in Sardegna<br />
+            <em className="italic text-[#E8DDD0]">un&apos;esperienza eccezionale</em>
+          </h2>
+          <p className="text-[16px] md:text-[17px] text-[rgba(245,242,238,0.6)] leading-[1.9] mb-6 font-raleway font-light">
+            In KeneKita, la nostra missione è semplice ma fondamentale: rendere ogni soggiorno in Sardegna un&apos;esperienza eccezionale e indimenticabile.
+          </p>
+          <p className="text-[16px] md:text-[17px] text-[rgba(245,242,238,0.6)] leading-[1.9] font-raleway font-light">
             Crediamo fermamente nel potere di un viaggio di trasformare non solo il modo in cui vediamo il mondo, ma anche come viviamo la nostra vita.
           </p>
         </div>

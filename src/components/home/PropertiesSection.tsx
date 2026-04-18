@@ -26,7 +26,7 @@ const BASE = [
   },
   {
     slug:'gardenia-luxury', name:'Gardenia Luxury', location:'Palau', tag:'Appartamento',
-    desc:'Splendido appartamento con patio bordo piscina e giardino, inserito in un residence di pregio nella citta di Palau. Contesto di lusso e raffinatezza.',
+    desc:'Splendido appartamento con patio bordo piscina e giardino, inserito in un residence di pregio nella città di Palau. Contesto di lusso e raffinatezza.',
     services:['2 Camere da Letto','2 Bagni','Piscina','Vasca Idromassaggio','Patio Privato','Aria Condizionata'],
     tags:['WiFi Gratuito','Vicino alla Spiaggia'],
     images:['/images/strutture/gardenia-luxury/hero.jpg','/images/strutture/gardenia-luxury/01.jpg','/images/strutture/gardenia-luxury/02.jpg','/images/strutture/gardenia-luxury/03.jpg'],
@@ -77,7 +77,7 @@ const BASE = [
 
 function ServiceIcon() {
   return (
-    <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="#B8965A" strokeWidth="2" style={{flexShrink:0}}>
+    <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="#B8965A" strokeWidth="2" className="flex-shrink-0">
       <path d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/>
     </svg>
   )
@@ -98,62 +98,77 @@ function PropertyCard({ p }: { p: typeof BASE[0] }) {
 
   return (
     <div
-      style={{ flexShrink:0, width:'calc(33.333% - 11px)', background:'#1a1917', borderRadius:12, overflow:'hidden', display:'flex', flexDirection:'column' }}
+      /* Mobile: full width. md: 1/2. lg: 1/3 minus gap */
+      className="flex-shrink-0 w-full md:w-[calc(50%-8px)] lg:w-[calc(33.333%-11px)] bg-[#1a1917] rounded-[12px] overflow-hidden flex flex-col"
       onMouseEnter={() => setCardHovered(true)}
       onMouseLeave={() => { setCardHovered(false); setHovered(false) }}
     >
+      {/* Image carousel */}
       <div
-        style={{ position:'relative', width:'100%', aspectRatio:'16/10', overflow:'hidden', background:'#111', flexShrink:0 }}
+        className="relative w-full overflow-hidden bg-[#111] flex-shrink-0"
+        style={{ aspectRatio: '16/10' }}
         onMouseEnter={() => setHovered(true)}
         onMouseLeave={() => setHovered(false)}
       >
-        {p.images.map((img,i) => (
-          <div key={i} style={{ position:'absolute', inset:0, opacity:i===imgIndex?1:0, transition:'opacity 0.9s ease', zIndex:i===imgIndex?1:0 }}>
-            <Image src={img} alt={p.name} fill unoptimized style={{ objectFit:'cover' }} />
+        {p.images.map((img, i) => (
+          <div key={i} className="absolute inset-0" style={{ opacity: i === imgIndex ? 1 : 0, transition: 'opacity 0.9s ease', zIndex: i === imgIndex ? 1 : 0 }}>
+            <Image src={img} alt={p.name} fill unoptimized className="object-cover" />
           </div>
         ))}
-        <div style={{ position:'absolute', inset:0, background:'linear-gradient(to top, rgba(0,0,0,0.4) 0%, transparent 60%)', zIndex:2 }} />
-        <span style={{ position:'absolute', top:12, left:12, zIndex:4, fontSize:9, fontWeight:700, letterSpacing:'0.18em', textTransform:'uppercase', color:'#F5F2EE', background:'rgba(184,150,90,0.9)', padding:'4px 10px', borderRadius:4 }}>{p.tag}</span>
-        <div style={{ position:'absolute', bottom:10, left:'50%', transform:'translateX(-50%)', zIndex:4, display:'flex', gap:4 }}>
-          {p.images.map((_,i) => (
-            <div key={i} style={{ width:i===imgIndex?14:4, height:4, borderRadius:2, background:i===imgIndex?'#B8965A':'rgba(255,255,255,0.5)', transition:'all 0.3s' }} />
+        <div className="absolute inset-0 z-[2]" style={{ background: 'linear-gradient(to top, rgba(0,0,0,0.4) 0%, transparent 60%)' }} />
+        <span className="absolute top-3 left-3 z-[4] text-[9px] font-bold tracking-[0.18em] uppercase text-[#F5F2EE] bg-[rgba(184,150,90,0.9)] px-2.5 py-1 rounded-[4px]">
+          {p.tag}
+        </span>
+        {/* Dots */}
+        <div className="absolute bottom-2.5 left-1/2 -translate-x-1/2 z-[4] flex gap-1">
+          {p.images.map((_, i) => (
+            <div key={i} className="h-1 rounded-[2px] transition-all duration-300"
+              style={{ width: i === imgIndex ? 14 : 4, background: i === imgIndex ? '#B8965A' : 'rgba(255,255,255,0.5)' }} />
           ))}
         </div>
-        <button onClick={e=>{e.preventDefault();prev()}} style={{ position:'absolute', left:10, top:'50%', transform:'translateY(-50%)', zIndex:5, background:'rgba(0,0,0,0.55)', border:'none', borderRadius:'50%', width:32, height:32, display:'flex', alignItems:'center', justifyContent:'center', cursor:'pointer', opacity:hovered?1:0, transition:'opacity 0.3s' }}>
+        {/* Prev/Next */}
+        <button onClick={e => { e.preventDefault(); prev() }}
+          className="absolute left-2.5 top-1/2 -translate-y-1/2 z-[5] bg-[rgba(0,0,0,0.55)] border-none rounded-full w-8 h-8 flex items-center justify-center cursor-pointer transition-opacity duration-300"
+          style={{ opacity: hovered ? 1 : 0 }}>
           <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="#fff" strokeWidth="2.5"><path d="M15 18l-6-6 6-6"/></svg>
         </button>
-        <button onClick={e=>{e.preventDefault();next()}} style={{ position:'absolute', right:10, top:'50%', transform:'translateY(-50%)', zIndex:5, background:'rgba(0,0,0,0.55)', border:'none', borderRadius:'50%', width:32, height:32, display:'flex', alignItems:'center', justifyContent:'center', cursor:'pointer', opacity:hovered?1:0, transition:'opacity 0.3s' }}>
+        <button onClick={e => { e.preventDefault(); next() }}
+          className="absolute right-2.5 top-1/2 -translate-y-1/2 z-[5] bg-[rgba(0,0,0,0.55)] border-none rounded-full w-8 h-8 flex items-center justify-center cursor-pointer transition-opacity duration-300"
+          style={{ opacity: hovered ? 1 : 0 }}>
           <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="#fff" strokeWidth="2.5"><path d="M9 18l6-6-6-6"/></svg>
         </button>
       </div>
 
-      <div style={{ padding:'20px 20px 24px', display:'flex', flexDirection:'column', flex:1 }}>
-        <h3 style={{ fontFamily:'var(--font-playfair)', fontSize:20, fontWeight:400, color:'#F5F2EE', marginBottom:6, lineHeight:1.2 }}>{p.name}</h3>
-        <div style={{ display:'flex', alignItems:'center', gap:5, marginBottom:12 }}>
-          <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="#B8965A" strokeWidth="2"><path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5c-1.38 0-2.5-1.12-2.5-2.5s1.12-2.5 2.5-2.5 2.5 1.12 2.5 2.5-1.12 2.5-2.5 2.5z"/></svg>
-          <span style={{ fontSize:12, color:'rgba(245,242,238,0.55)', letterSpacing:'0.05em' }}>{p.location}</span>
+      {/* Card body */}
+      <div className="px-5 pt-5 pb-6 flex flex-col flex-1">
+        <h3 className="font-playfair text-[20px] font-normal text-[#F5F2EE] mb-1.5 leading-[1.2]">{p.name}</h3>
+        <div className="flex items-center gap-1.5 mb-3">
+          <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="#B8965A" strokeWidth="2">
+            <path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5c-1.38 0-2.5-1.12-2.5-2.5s1.12-2.5 2.5-2.5 2.5 1.12 2.5 2.5-1.12 2.5-2.5 2.5z"/>
+          </svg>
+          <span className="text-[12px] text-[rgba(245,242,238,0.55)] tracking-[0.05em] font-raleway">{p.location}</span>
         </div>
-        <p style={{ fontSize:13, color:'rgba(245,242,238,0.55)', lineHeight:1.7, marginBottom:16, fontFamily:'var(--font-raleway)' }}>{p.desc}</p>
-        <div style={{ display:'grid', gridTemplateColumns:'1fr 1fr', gap:'6px 12px', marginBottom:16 }}>
+        <p className="text-[13px] text-[rgba(245,242,238,0.55)] leading-[1.7] mb-4 font-raleway">{p.desc}</p>
+        <div className="grid grid-cols-2 gap-x-3 gap-y-1.5 mb-4">
           {p.services.map(s => (
-            <div key={s} style={{ display:'flex', alignItems:'center', gap:6 }}>
+            <div key={s} className="flex items-center gap-1.5">
               <ServiceIcon />
-              <span style={{ fontSize:12, color:'rgba(245,242,238,0.7)', fontFamily:'var(--font-raleway)' }}>{s}</span>
+              <span className="text-[12px] text-[rgba(245,242,238,0.7)] font-raleway">{s}</span>
             </div>
           ))}
         </div>
-        <div style={{ display:'flex', flexWrap:'wrap', gap:6, marginBottom:20 }}>
+        <div className="flex flex-wrap gap-1.5 mb-5">
           {p.tags.map(t => (
-            <span key={t} style={{ fontSize:11, padding:'3px 10px', borderRadius:20, border:'1px solid rgba(184,150,90,0.35)', color:'#B8965A', fontFamily:'var(--font-raleway)', letterSpacing:'0.05em' }}>{t}</span>
+            <span key={t} className="text-[11px] px-2.5 py-[3px] rounded-[20px] border border-[rgba(184,150,90,0.35)] text-[#B8965A] font-raleway tracking-[0.05em]">{t}</span>
           ))}
         </div>
         <a
           href={BEDDY_URL}
           target="_blank"
           rel="noopener noreferrer"
-          style={{ display:'block', textAlign:'center', background:'#B8965A', color:'#0F0F0E', fontSize:12, fontWeight:600, letterSpacing:'0.15em', textTransform:'uppercase', padding:'13px 20px', textDecoration:'none', borderRadius:6, fontFamily:'var(--font-raleway)', marginTop:'auto' }}
+          className="block text-center bg-[#B8965A] text-[#0F0F0E] text-[12px] font-semibold tracking-[0.15em] uppercase px-5 py-[13px] no-underline rounded-[6px] font-raleway mt-auto transition-opacity hover:opacity-90"
         >
-          Verifica Disponibilita
+          Verifica Disponibilità
         </a>
       </div>
     </div>
@@ -165,8 +180,18 @@ export default function PropertiesSection() {
   const [current, setCurrent] = useState(0)
   const [paused, setPaused] = useState(false)
   const [animate, setAnimate] = useState(true)
+  const [isMobile, setIsMobile] = useState(false)
   const touchStartX = useRef(0)
-  const VISIBLE = 3
+
+  // Detect mobile for visible count
+  useEffect(() => {
+    const check = () => setIsMobile(window.innerWidth < 768)
+    check()
+    window.addEventListener('resize', check)
+    return () => window.removeEventListener('resize', check)
+  }, [])
+
+  const VISIBLE = isMobile ? 1 : 3
   const total = BASE.length
   const items = [...BASE.slice(-VISIBLE), ...BASE, ...BASE.slice(0, VISIBLE)]
   const offset = (current + VISIBLE) * (100 / VISIBLE)
@@ -189,24 +214,56 @@ export default function PropertiesSection() {
   }
 
   return (
-    <section ref={ref} style={{ background:'linear-gradient(to bottom, #0a0d0c, #0F0F0E)', padding:'110px 0' }}>
-      <div style={{ padding:'0 5%', display:'flex', justifyContent:'space-between', alignItems:'flex-end', marginBottom:50, opacity:inView?1:0, transform:inView?'translateY(0)':'translateY(30px)', transition:'opacity 0.7s, transform 0.7s' }}>
+    <section ref={ref} className="py-[110px]" style={{ background: 'linear-gradient(to bottom, #0a0d0c, #0F0F0E)' }}>
+      {/* Header */}
+      <div
+        className="px-[5%] flex flex-col gap-5 mb-12 md:flex-row md:justify-between md:items-end"
+        style={{ opacity: inView ? 1 : 0, transform: inView ? 'translateY(0)' : 'translateY(30px)', transition: 'opacity 0.7s, transform 0.7s' }}
+      >
         <div>
-          <p style={{ fontSize:10, fontWeight:600, letterSpacing:'0.35em', textTransform:'uppercase', color:'#B8965A', marginBottom:16 }}>Le Nostre Proprieta</p>
-          <h2 style={{ fontFamily:'var(--font-playfair)', fontSize:'clamp(28px,3.5vw,46px)', fontWeight:400, lineHeight:1.2, color:'#F5F2EE' }}>Ville e Appartamenti<br/>selezionati in Sardegna</h2>
+          <p className="text-[10px] font-semibold tracking-[0.35em] uppercase text-[#B8965A] mb-4 font-raleway">Le Nostre Proprietà</p>
+          <h2 className="font-playfair font-normal leading-[1.2] text-[#F5F2EE] text-[clamp(28px,3.5vw,46px)]">
+            Ville e Appartamenti<br />selezionati in Sardegna
+          </h2>
         </div>
-        <div style={{ display:'flex', alignItems:'center', gap:12 }}>
-          <button onClick={() => { setAnimate(true); setCurrent(c => c-1) }} style={{ background:'transparent', border:'1px solid rgba(245,242,238,0.2)', borderRadius:'50%', width:44, height:44, display:'flex', alignItems:'center', justifyContent:'center', cursor:'pointer' }}>
+        <div className="flex items-center gap-3">
+          <button
+            onClick={() => { setAnimate(true); setCurrent(c => c - 1) }}
+            className="bg-transparent border border-[rgba(245,242,238,0.2)] rounded-full w-11 h-11 flex items-center justify-center cursor-pointer"
+          >
             <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#F5F2EE" strokeWidth="2"><path d="M15 18l-6-6 6-6"/></svg>
           </button>
-          <button onClick={() => { setAnimate(true); setCurrent(c => c+1) }} style={{ background:'transparent', border:'1px solid rgba(245,242,238,0.2)', borderRadius:'50%', width:44, height:44, display:'flex', alignItems:'center', justifyContent:'center', cursor:'pointer' }}>
+          <button
+            onClick={() => { setAnimate(true); setCurrent(c => c + 1) }}
+            className="bg-transparent border border-[rgba(245,242,238,0.2)] rounded-full w-11 h-11 flex items-center justify-center cursor-pointer"
+          >
             <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#F5F2EE" strokeWidth="2"><path d="M9 18l6-6-6-6"/></svg>
           </button>
-          <Link href="/strutture" style={{ fontSize:11, fontWeight:600, letterSpacing:'0.2em', textTransform:'uppercase', color:'#B8965A', textDecoration:'none', border:'1px solid rgba(184,150,90,0.35)', padding:'12px 28px' }}>Vedi Tutti</Link>
+          <Link
+            href="/strutture"
+            className="text-[11px] font-semibold tracking-[0.2em] uppercase text-[#B8965A] no-underline border border-[rgba(184,150,90,0.35)] px-7 py-3 font-raleway"
+          >
+            Vedi Tutti
+          </Link>
         </div>
       </div>
-      <div style={{ overflow:'hidden', padding:'0 5%' }} onMouseEnter={() => setPaused(true)} onMouseLeave={() => setPaused(false)} onTouchStart={onTouchStart} onTouchEnd={onTouchEnd}>
-        <div style={{ display:'flex', gap:16, transform:'translateX(calc(-' + offset + '% - ' + ((current + VISIBLE) * 16 / VISIBLE) + 'px))', transition: animate ? 'transform 0.9s cubic-bezier(0.25,0.46,0.45,0.94)' : 'none', opacity: inView ? 1 : 0, alignItems:'stretch' }}>
+
+      {/* Slider */}
+      <div
+        className="overflow-hidden px-[5%]"
+        onMouseEnter={() => setPaused(true)}
+        onMouseLeave={() => setPaused(false)}
+        onTouchStart={onTouchStart}
+        onTouchEnd={onTouchEnd}
+      >
+        <div
+          className="flex gap-4 items-stretch"
+          style={{
+            transform: `translateX(calc(-${offset}% - ${(current + VISIBLE) * 16 / VISIBLE}px))`,
+            transition: animate ? 'transform 0.9s cubic-bezier(0.25,0.46,0.45,0.94)' : 'none',
+            opacity: inView ? 1 : 0,
+          }}
+        >
           {items.map((p, i) => <PropertyCard key={p.slug + '-' + i} p={p} />)}
         </div>
       </div>

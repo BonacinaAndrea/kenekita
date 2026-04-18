@@ -67,62 +67,72 @@ const socials = [
 
 export default function Footer() {
   return (
-    <footer style={{ background: '#0a0908', borderTop: '1px solid rgba(245,242,238,0.06)' }}>
+    <footer className="bg-[#0a0908] border-t border-[rgba(245,242,238,0.06)]">
 
-      {/* ── CTA Strip ── */}
-      <div style={{ borderBottom: '1px solid rgba(245,242,238,0.06)', padding: '56px 5%' }}>
-        <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', gap: 40, flexWrap: 'wrap' }}>
+      {/* CTA Strip */}
+      <div className="border-b border-[rgba(245,242,238,0.06)] px-[5%] py-14">
+        <div className="flex flex-col gap-6 md:flex-row md:items-center md:justify-between md:gap-10">
           <div>
-            <p style={{ fontSize: 10, fontWeight: 600, letterSpacing: '0.3em', textTransform: 'uppercase', color: '#B8965A', marginBottom: 10, fontFamily: 'var(--font-raleway)' }}>Hai un immobile in Sardegna?</p>
-            <h2 style={{ fontFamily: 'var(--font-playfair)', fontSize: 'clamp(22px,2.5vw,34px)', fontWeight: 400, color: '#F5F2EE', lineHeight: 1.2 }}>
+            <p className="text-[10px] font-semibold tracking-[0.3em] uppercase text-[#B8965A] mb-2.5 font-raleway">
+              Hai un immobile in Sardegna?
+            </p>
+            <h2 className="font-playfair font-normal text-[#F5F2EE] leading-[1.2] text-[clamp(22px,2.5vw,34px)]">
               Affidacelo. Pensiamo a tutto noi.
             </h2>
           </div>
-          <div style={{ display: 'flex', gap: 12, flexShrink: 0 }}>
-            <Link href="/proprietari#contatto" style={{ background: '#B8965A', color: '#0F0F0E', fontSize: 11, fontWeight: 700, letterSpacing: '0.2em', textTransform: 'uppercase', padding: '13px 28px', textDecoration: 'none', fontFamily: 'var(--font-raleway)', whiteSpace: 'nowrap' }}>
+          <div className="flex flex-col gap-3 sm:flex-row sm:flex-shrink-0">
+            <Link
+              href="/proprietari#contatto"
+              className="bg-[#B8965A] text-[#0F0F0E] text-[11px] font-bold tracking-[0.2em] uppercase px-7 py-[13px] no-underline font-raleway whitespace-nowrap text-center"
+            >
               Sopralluogo Gratuito
             </Link>
-            <Link href="/strutture" style={{ background: 'transparent', color: '#F5F2EE', fontSize: 11, fontWeight: 500, letterSpacing: '0.2em', textTransform: 'uppercase', padding: '13px 28px', textDecoration: 'none', border: '1px solid rgba(245,242,238,0.2)', fontFamily: 'var(--font-raleway)', whiteSpace: 'nowrap' }}>
+            <Link
+              href="/strutture"
+              className="bg-transparent text-[#F5F2EE] text-[11px] font-medium tracking-[0.2em] uppercase px-7 py-[13px] no-underline border border-[rgba(245,242,238,0.2)] font-raleway whitespace-nowrap text-center"
+            >
               Esplora gli Immobili
             </Link>
           </div>
         </div>
       </div>
 
-      {/* ── Main Footer ── */}
-      <div style={{ padding: '72px 5% 48px' }}>
-        <div style={{ display: 'grid', gridTemplateColumns: '2fr 1fr 1fr 1fr', gap: 60, marginBottom: 64 }}>
+      {/* Main Footer */}
+      <div className="px-[5%] pt-16 pb-12">
+        {/* Grid: 1 col mobile → 2 col sm → 4 col lg */}
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-[2fr_1fr_1fr_1fr] gap-10 lg:gap-[60px] mb-16">
 
           {/* Brand column */}
           <div>
-            <div style={{ fontFamily: 'var(--font-bbh)', fontSize: 22, fontWeight: 400, letterSpacing: '0.08em', color: '#F5F2EE', marginBottom: 6 }}>KeneKita</div>
-            <div style={{ fontSize: 10, letterSpacing: '0.25em', textTransform: 'uppercase', color: '#B8965A', marginBottom: 20, fontFamily: 'var(--font-raleway)' }}>Co-Hosting &amp; Property Management</div>
-            <p style={{ fontSize: 13, color: 'rgba(245,242,238,0.4)', lineHeight: 1.75, marginBottom: 28, fontFamily: 'var(--font-raleway)' }}>
+            <div className="font-bbh text-[22px] font-normal tracking-[0.08em] text-[#F5F2EE] mb-1.5">KeneKita</div>
+            <div className="text-[10px] tracking-[0.25em] uppercase text-[#B8965A] mb-5 font-raleway">
+              Co-Hosting &amp; Property Management
+            </div>
+            <p className="text-[13px] text-[rgba(245,242,238,0.4)] leading-[1.75] mb-7 font-raleway">
               Il tuo partner di fiducia per affitti turistici in Sardegna. Professionalità, esperienza e passione dal 2015.
             </p>
 
             {/* Contact info */}
-            <div style={{ display: 'flex', flexDirection: 'column', gap: 8, marginBottom: 28 }}>
+            <div className="flex flex-col gap-2 mb-7">
               {[
                 { href: 'tel:+393791502073', label: '+39 379 150 2073' },
                 { href: 'tel:+393793061937', label: '+39 379 306 1937' },
                 { href: 'mailto:info@kenekita.com', label: 'info@kenekita.com' },
               ].map(c => (
-                <a key={c.href} href={c.href} style={{ fontSize: 13, color: 'rgba(245,242,238,0.4)', textDecoration: 'none', fontFamily: 'var(--font-raleway)', transition: 'color 0.2s' }}
-                  onMouseEnter={e => (e.currentTarget.style.color = '#B8965A')}
-                  onMouseLeave={e => (e.currentTarget.style.color = 'rgba(245,242,238,0.4)')}
+                <a
+                  key={c.href} href={c.href}
+                  className="text-[13px] text-[rgba(245,242,238,0.4)] no-underline font-raleway transition-colors duration-200 hover:text-[#B8965A]"
                 >{c.label}</a>
               ))}
-              <span style={{ fontSize: 13, color: 'rgba(245,242,238,0.3)', fontFamily: 'var(--font-raleway)' }}>Via Gallura 10C, 07026 Olbia (SS)</span>
+              <span className="text-[13px] text-[rgba(245,242,238,0.3)] font-raleway">Via Gallura 10C, 07026 Olbia (SS)</span>
             </div>
 
             {/* Social icons */}
-            <div style={{ display: 'flex', gap: 10 }}>
+            <div className="flex gap-2.5">
               {socials.map(s => (
-                <a key={s.label} href={s.href} target="_blank" rel="noopener noreferrer" aria-label={s.label}
-                  style={{ width: 38, height: 38, border: '1px solid rgba(245,242,238,0.12)', display: 'flex', alignItems: 'center', justifyContent: 'center', color: 'rgba(245,242,238,0.4)', textDecoration: 'none', transition: 'border-color 0.2s, color 0.2s' }}
-                  onMouseEnter={e => { (e.currentTarget as HTMLElement).style.borderColor = 'rgba(184,150,90,0.5)'; (e.currentTarget as HTMLElement).style.color = '#B8965A' }}
-                  onMouseLeave={e => { (e.currentTarget as HTMLElement).style.borderColor = 'rgba(245,242,238,0.12)'; (e.currentTarget as HTMLElement).style.color = 'rgba(245,242,238,0.4)' }}
+                <a
+                  key={s.label} href={s.href} target="_blank" rel="noopener noreferrer" aria-label={s.label}
+                  className="w-[38px] h-[38px] border border-[rgba(245,242,238,0.12)] flex items-center justify-center text-[rgba(245,242,238,0.4)] no-underline transition-all duration-200 hover:border-[rgba(184,150,90,0.5)] hover:text-[#B8965A]"
                 >
                   {s.icon}
                 </a>
@@ -136,23 +146,22 @@ export default function Footer() {
           <FooterCol title="Dove Siamo" links={locationLinks} />
         </div>
 
-        {/* ── Bottom bar ── */}
-        <div style={{ borderTop: '1px solid rgba(245,242,238,0.06)', paddingTop: 28, display: 'flex', justifyContent: 'space-between', alignItems: 'center', gap: 24, flexWrap: 'wrap' }}>
-          <div style={{ fontSize: 11, color: 'rgba(245,242,238,0.2)', lineHeight: 1.8, fontFamily: 'var(--font-raleway)' }}>
+        {/* Bottom bar */}
+        <div className="border-t border-[rgba(245,242,238,0.06)] pt-7 flex flex-col gap-4 md:flex-row md:justify-between md:items-center">
+          <div className="text-[11px] text-[rgba(245,242,238,0.2)] leading-[1.8] font-raleway">
             Kenekita è un marchio di SGS Sardinia Global Service — P.I. 02789830904<br />
             Sede legale: Via Gallura 10C, Olbia (SS) &nbsp;|&nbsp; Uffici: Corso Vittorio Veneto 88/A, Olbia (SS)<br />
             © {new Date().getFullYear()} Kenekita. Tutti i diritti riservati.
           </div>
-          <div style={{ display: 'flex', gap: 20, flexWrap: 'wrap' }}>
+          <div className="flex flex-wrap gap-5">
             {[
               { label: 'Privacy Policy', href: '/privacy-policy' },
               { label: 'Cookie Policy', href: '/cookie-policy' },
               { label: 'Termini di Servizio', href: '/termini' },
             ].map(item => (
-              <Link key={item.label} href={item.href}
-                style={{ fontSize: 11, color: 'rgba(245,242,238,0.2)', textDecoration: 'none', fontFamily: 'var(--font-raleway)', transition: 'color 0.2s', whiteSpace: 'nowrap' }}
-                onMouseEnter={e => (e.currentTarget.style.color = 'rgba(245,242,238,0.5)')}
-                onMouseLeave={e => (e.currentTarget.style.color = 'rgba(245,242,238,0.2)')}
+              <Link
+                key={item.label} href={item.href}
+                className="text-[11px] text-[rgba(245,242,238,0.2)] no-underline font-raleway whitespace-nowrap transition-colors duration-200 hover:text-[rgba(245,242,238,0.5)]"
               >{item.label}</Link>
             ))}
           </div>
@@ -165,14 +174,13 @@ export default function Footer() {
 function FooterCol({ title, links }: { title: string; links: { label: string; href: string }[] }) {
   return (
     <div>
-      <div style={{ fontSize: 10, fontWeight: 600, letterSpacing: '0.25em', textTransform: 'uppercase', color: 'rgba(245,242,238,0.6)', marginBottom: 20, fontFamily: 'var(--font-raleway)' }}>{title}</div>
-      <ul style={{ listStyle: 'none', padding: 0, margin: 0 }}>
+      <div className="text-[10px] font-semibold tracking-[0.25em] uppercase text-[rgba(245,242,238,0.6)] mb-5 font-raleway">{title}</div>
+      <ul className="list-none p-0 m-0">
         {links.map(l => (
-          <li key={l.label} style={{ marginBottom: 10 }}>
-            <Link href={l.href}
-              style={{ fontSize: 13, color: 'rgba(245,242,238,0.35)', textDecoration: 'none', fontFamily: 'var(--font-raleway)', transition: 'color 0.2s', display: 'inline-block' }}
-              onMouseEnter={e => (e.currentTarget.style.color = '#B8965A')}
-              onMouseLeave={e => (e.currentTarget.style.color = 'rgba(245,242,238,0.35)')}
+          <li key={l.label} className="mb-2.5">
+            <Link
+              href={l.href}
+              className="text-[13px] text-[rgba(245,242,238,0.35)] no-underline font-raleway transition-colors duration-200 hover:text-[#B8965A] inline-block"
             >{l.label}</Link>
           </li>
         ))}

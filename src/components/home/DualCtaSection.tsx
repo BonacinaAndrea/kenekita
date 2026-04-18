@@ -16,7 +16,8 @@ function useInView() {
 export default function DualCtaSection() {
   const { ref, inView } = useInView()
   return (
-    <div ref={ref} style={{ display:'grid', gridTemplateColumns:'1fr 1fr', gap:3, background:'#0a0908' }}>
+    /* Mobile: single column stack; md+: 2-col side by side */
+    <div ref={ref} className="grid grid-cols-1 md:grid-cols-2 gap-[3px] bg-[#0a0908]">
       <Card
         tag="Per gli Ospiti"
         title={'Trova la Tua\nCasa Vacanza'}
@@ -31,7 +32,7 @@ export default function DualCtaSection() {
       <Card
         tag="Per i Proprietari"
         title={'Affidaci il Tuo\nImmobile'}
-        sub="Gestione completa e rendita garantita per la tua proprieta. Zero preoccupazioni."
+        sub="Gestione completa e rendita garantita per la tua proprietà. Zero preoccupazioni."
         items={['Gestione chiavi in mano','Marketing su tutte le piattaforme','Rendicontazione trasparente']}
         cta="Diventa Partner"
         href="/proprietari"
@@ -43,60 +44,58 @@ export default function DualCtaSection() {
   )
 }
 
-function Card({ tag,title,sub,items,cta,href,image,delay,inView }: {
-  tag:string, title:string, sub:string, items:string[], cta:string, href:string, image:string, delay:number, inView:boolean
+function Card({ tag, title, sub, items, cta, href, image, delay, inView }: {
+  tag: string; title: string; sub: string; items: string[]; cta: string;
+  href: string; image: string; delay: number; inView: boolean
 }) {
   return (
-    <div style={{
-      position:'relative',
-      minHeight:580,
-      overflow:'hidden',
-      display:'flex',
-      alignItems:'flex-end',
-      opacity: inView ? 1 : 0,
-      transform: inView ? 'translateY(0)' : 'translateY(40px)',
-      transition: 'opacity 0.8s ' + delay + 's, transform 0.8s ' + delay + 's',
-    }}>
-      <div style={{
-        position:'absolute', inset:0,
-        backgroundImage:'url(' + image + ')',
-        backgroundSize:'cover',
-        backgroundPosition:'center',
-        zIndex:0,
-      }} />
-      <div style={{
-        position:'absolute', inset:0,
-        background:'linear-gradient(to top, rgba(5,5,4,0.97) 0%, rgba(5,5,4,0.75) 45%, rgba(5,5,4,0.3) 75%, rgba(5,5,4,0.15) 100%)',
-        zIndex:1,
-      }} />
-      <div style={{ position:'relative', zIndex:2, padding:'64px 56px', width:'100%' }}>
-        <span style={{
-          display:'inline-block', fontSize:10, fontWeight:600, letterSpacing:'0.25em',
-          textTransform:'uppercase', color:'#B8965A', border:'1px solid rgba(184,150,90,0.4)',
-          padding:'5px 14px', marginBottom:28,
-        }}>{tag}</span>
-        <h2 style={{
-          fontFamily:'var(--font-playfair)', fontSize:'clamp(30px,3.5vw,48px)',
-          fontWeight:400, lineHeight:1.2, marginBottom:16, color:'#F5F2EE', whiteSpace:'pre-line',
-        }}>{title}</h2>
-        <p style={{ fontSize:14, color:'rgba(245,242,238,0.55)', lineHeight:1.75, marginBottom:32, maxWidth:400 }}>{sub}</p>
-        <ul style={{ listStyle:'none', padding:0, marginBottom:40 }}>
+    <div
+      className="relative min-h-[480px] md:min-h-[580px] overflow-hidden flex items-end"
+      style={{
+        opacity: inView ? 1 : 0,
+        transform: inView ? 'translateY(0)' : 'translateY(40px)',
+        transition: `opacity 0.8s ${delay}s, transform 0.8s ${delay}s`,
+      }}
+    >
+      {/* Background image */}
+      <div
+        className="absolute inset-0 z-0 bg-cover bg-center"
+        style={{ backgroundImage: `url(${image})` }}
+      />
+      {/* Gradient overlay */}
+      <div
+        className="absolute inset-0 z-[1]"
+        style={{ background: 'linear-gradient(to top, rgba(5,5,4,0.97) 0%, rgba(5,5,4,0.75) 45%, rgba(5,5,4,0.3) 75%, rgba(5,5,4,0.15) 100%)' }}
+      />
+
+      {/* Content */}
+      <div className="relative z-[2] w-full px-8 py-14 md:px-14 md:py-16">
+        <span className="inline-block text-[10px] font-semibold tracking-[0.25em] uppercase text-[#B8965A] border border-[rgba(184,150,90,0.4)] px-3.5 py-[5px] mb-7 font-raleway">
+          {tag}
+        </span>
+        <h2 className="font-playfair font-normal leading-[1.2] mb-4 text-[#F5F2EE] whitespace-pre-line text-[clamp(28px,3.5vw,48px)]">
+          {title}
+        </h2>
+        <p className="text-[14px] text-[rgba(245,242,238,0.55)] leading-[1.75] mb-8 max-w-[400px] font-raleway">
+          {sub}
+        </p>
+        <ul className="list-none p-0 mb-10">
           {items.map(item => (
-            <li key={item} style={{
-              fontSize:13, color:'rgba(245,242,238,0.75)', padding:'8px 0',
-              display:'flex', alignItems:'center', gap:12,
-              borderBottom:'1px solid rgba(245,242,238,0.07)',
-            }}>
-              <span style={{ width:16, height:1, background:'#B8965A', display:'inline-block', flexShrink:0 }} />
+            <li
+              key={item}
+              className="text-[13px] text-[rgba(245,242,238,0.75)] py-2 flex items-center gap-3 border-b border-[rgba(245,242,238,0.07)] font-raleway"
+            >
+              <span className="w-4 h-px bg-[#B8965A] inline-block flex-shrink-0" />
               {item}
             </li>
           ))}
         </ul>
-        <Link href={href} style={{
-          background:'#B8965A', color:'#0F0F0E', fontSize:11, fontWeight:600,
-          letterSpacing:'0.2em', textTransform:'uppercase', padding:'15px 36px',
-          textDecoration:'none', display:'inline-block',
-        }}>{cta}</Link>
+        <Link
+          href={href}
+          className="bg-[#B8965A] text-[#0F0F0E] text-[11px] font-semibold tracking-[0.2em] uppercase px-9 py-[15px] no-underline inline-block font-raleway transition-opacity hover:opacity-90"
+        >
+          {cta}
+        </Link>
       </div>
     </div>
   )

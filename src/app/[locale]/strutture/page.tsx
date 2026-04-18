@@ -22,82 +22,120 @@ const properties = [
 
 export default function StrutturePage() {
   return (
-    <main style={{ background:'#0F0F0E', minHeight:'100vh' }}>
+    <main className="bg-[#0F0F0E] min-h-screen">
 
       {/* Hero video */}
-      <div style={{ position:'relative', height:'70vh', minHeight:500, overflow:'hidden' }}>
-        <video autoPlay muted loop playsInline style={{ position:'absolute', inset:0, width:'100%', height:'100%', objectFit:'cover', zIndex:0 }}>
+      <div className="relative overflow-hidden" style={{ height: '70vh', minHeight: 400 }}>
+        <video autoPlay muted loop playsInline className="absolute inset-0 w-full h-full object-cover z-0">
           <source src="/videos/strutture.mp4" type="video/mp4" />
           <source src="/videos/hero.mp4" type="video/mp4" />
         </video>
-        <div style={{ position:'absolute', inset:0, background:'linear-gradient(to bottom, rgba(0,0,0,0.35) 0%, rgba(15,15,14,0.82) 100%)', zIndex:1 }} />
-        <div style={{ position:'absolute', inset:0, zIndex:2, display:'flex', flexDirection:'column', alignItems:'center', justifyContent:'center', textAlign:'center', padding:'0 5%' }}>
-          <p style={{ fontSize:11, fontWeight:600, letterSpacing:'0.35em', textTransform:'uppercase', color:'#B8965A', marginBottom:20, fontFamily:'var(--font-raleway)' }}>Le Nostre Proprietà</p>
-          <h1 style={{ fontFamily:'var(--font-playfair)', fontSize:'clamp(40px,6vw,80px)', fontWeight:400, color:'#F5F2EE', lineHeight:1.1 }}>
-            Ville e Appartamenti<br/><em style={{ fontStyle:'italic', color:'#E8DDD0' }}>in Sardegna</em>
+        <div className="absolute inset-0 z-[1]"
+          style={{ background: 'linear-gradient(to bottom, rgba(0,0,0,0.35) 0%, rgba(15,15,14,0.82) 100%)' }} />
+        <div className="absolute inset-0 z-[2] flex flex-col items-center justify-center text-center px-[5%]">
+          <p className="text-[11px] font-semibold tracking-[0.35em] uppercase text-[#B8965A] mb-5 font-raleway">
+            Le Nostre Proprietà
+          </p>
+          <h1 className="font-playfair font-normal text-[#F5F2EE] leading-[1.1] text-[clamp(32px,6vw,80px)]">
+            Ville e Appartamenti<br />
+            <em className="italic text-[#E8DDD0]">in Sardegna</em>
           </h1>
         </div>
       </div>
 
-      {/* Lista ville */}
-      <div style={{ display:'flex', flexDirection:'column', gap:3 }}>
+      {/* Property list */}
+      <div className="flex flex-col gap-[3px]">
         {properties.map((p, i) => {
           const imgLeft = i % 2 === 0
           return (
-            <div key={p.slug} style={{ display:'grid', gridTemplateColumns:'1fr 1fr', minHeight:520, background:'#141412' }}>
+            <div key={p.slug} className="bg-[#141412]">
+              {/*
+                Mobile: photo on top, text below (flex-col)
+                md+: side-by-side 2-col grid
+              */}
+              <div className={[
+                'flex flex-col md:grid md:grid-cols-2 md:min-h-[520px]',
+              ].join(' ')}>
 
-              {/* Immagine */}
-              <div style={{ order: imgLeft ? 0 : 1, position:'relative', overflow:'hidden' }}>
-                <Image src={p.img} alt={p.name} fill unoptimized style={{ objectFit:'cover', transition:'transform 0.8s ease' }} />
-                <div style={{ position:'absolute', inset:0, background: imgLeft ? 'linear-gradient(to right, transparent 55%, #141412 100%)' : 'linear-gradient(to left, transparent 55%, #141412 100%)', zIndex:1 }} />
-                <span style={{ position:'absolute', top:24, left:24, zIndex:2, fontSize:10, fontWeight:700, letterSpacing:'0.2em', textTransform:'uppercase', color:'#F5F2EE', background:'rgba(184,150,90,0.9)', padding:'6px 14px' }}>{p.tag}</span>
+                {/* Image */}
+                <div className={[
+                  'relative overflow-hidden',
+                  'h-[260px] md:h-auto',           // fixed height on mobile, auto on desktop
+                  imgLeft ? 'md:order-first' : 'md:order-last',
+                ].join(' ')}>
+                  <Image
+                    src={p.img} alt={p.name} fill unoptimized
+                    className="object-cover transition-transform duration-[800ms] ease-out"
+                  />
+                  {/* Fade edge toward text — desktop only */}
+                  <div className="hidden md:block absolute inset-0 z-[1]"
+                    style={{ background: imgLeft
+                      ? 'linear-gradient(to right, transparent 55%, #141412 100%)'
+                      : 'linear-gradient(to left, transparent 55%, #141412 100%)' }}
+                  />
+                  <span className="absolute top-4 left-4 md:top-6 md:left-6 z-[2] text-[10px] font-bold tracking-[0.2em] uppercase text-[#F5F2EE] bg-[rgba(184,150,90,0.9)] px-3.5 py-1.5">
+                    {p.tag}
+                  </span>
+                </div>
+
+                {/* Content */}
+                <div className={[
+                  'flex flex-col justify-center px-6 py-10 md:px-16 md:py-16',
+                  imgLeft ? 'md:order-last' : 'md:order-first',
+                ].join(' ')}>
+                  <div className="flex items-center gap-2 mb-3.5">
+                    <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="#B8965A" strokeWidth="2">
+                      <path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5c-1.38 0-2.5-1.12-2.5-2.5s1.12-2.5 2.5-2.5 2.5 1.12 2.5 2.5-1.12 2.5-2.5 2.5z"/>
+                    </svg>
+                    <span className="text-[13px] text-[#B8965A] tracking-[0.12em] uppercase font-raleway">{p.location}</span>
+                  </div>
+                  <h2 className="font-playfair font-normal text-[#F5F2EE] mb-4 leading-[1.15] text-[clamp(24px,3vw,48px)]">
+                    {p.name}
+                  </h2>
+                  <p className="text-[15px] md:text-[16px] text-[rgba(245,242,238,0.6)] leading-[1.8] mb-7 font-raleway font-light">
+                    {p.desc}
+                  </p>
+
+                  {/* Services */}
+                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-x-5 gap-y-2 mb-6">
+                    {p.services.map(s => (
+                      <div key={s} className="flex items-center gap-2">
+                        <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="#B8965A" strokeWidth="2" className="flex-shrink-0">
+                          <path d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/>
+                        </svg>
+                        <span className="text-[13px] md:text-[14px] text-[rgba(245,242,238,0.75)] font-raleway">{s}</span>
+                      </div>
+                    ))}
+                  </div>
+
+                  {/* Tags */}
+                  <div className="flex flex-wrap gap-2 mb-8">
+                    {p.tags.map(t => (
+                      <span key={t} className="text-[12px] px-3.5 py-1 rounded-[20px] border border-[rgba(184,150,90,0.4)] text-[#B8965A] font-raleway">
+                        {t}
+                      </span>
+                    ))}
+                  </div>
+
+                  {/* CTAs */}
+                  <div className="flex flex-col gap-3 sm:flex-row sm:flex-wrap">
+                    <a
+                      href={BEDDY_URL}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="bg-[#B8965A] text-[#0F0F0E] text-[12px] font-semibold tracking-[0.18em] uppercase px-8 py-[15px] no-underline inline-block font-raleway text-center transition-opacity hover:opacity-90"
+                    >
+                      Verifica Disponibilità
+                    </a>
+                    <Link
+                      href={`/strutture/${p.slug}`}
+                      className="bg-transparent text-[#F5F2EE] text-[12px] font-medium tracking-[0.18em] uppercase px-8 py-[15px] no-underline inline-block border border-[rgba(245,242,238,0.25)] font-raleway text-center transition-colors hover:border-[rgba(245,242,238,0.5)]"
+                    >
+                      Scopri di più
+                    </Link>
+                  </div>
+                </div>
               </div>
-
-              {/* Contenuto */}
-              <div style={{ order: imgLeft ? 1 : 0, padding:'64px 72px', display:'flex', flexDirection:'column', justifyContent:'center' }}>
-                <div style={{ display:'flex', alignItems:'center', gap:7, marginBottom:14 }}>
-                  <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="#B8965A" strokeWidth="2"><path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5c-1.38 0-2.5-1.12-2.5-2.5s1.12-2.5 2.5-2.5 2.5 1.12 2.5 2.5-1.12 2.5-2.5 2.5z"/></svg>
-                  <span style={{ fontSize:13, color:'#B8965A', letterSpacing:'0.12em', textTransform:'uppercase', fontFamily:'var(--font-raleway)' }}>{p.location}</span>
-                </div>
-                <h2 style={{ fontFamily:'var(--font-playfair)', fontSize:'clamp(28px,3vw,48px)', fontWeight:400, color:'#F5F2EE', marginBottom:18, lineHeight:1.15 }}>{p.name}</h2>
-                <p style={{ fontSize:16, color:'rgba(245,242,238,0.6)', lineHeight:1.8, marginBottom:28, fontFamily:'var(--font-raleway)', fontWeight:300 }}>{p.desc}</p>
-
-                {/* Servizi */}
-                <div style={{ display:'grid', gridTemplateColumns:'1fr 1fr', gap:'8px 20px', marginBottom:24 }}>
-                  {p.services.map(s => (
-                    <div key={s} style={{ display:'flex', alignItems:'center', gap:8 }}>
-                      <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="#B8965A" strokeWidth="2" style={{flexShrink:0}}><path d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
-                      <span style={{ fontSize:14, color:'rgba(245,242,238,0.75)', fontFamily:'var(--font-raleway)' }}>{s}</span>
-                    </div>
-                  ))}
-                </div>
-
-                {/* Tags */}
-                <div style={{ display:'flex', flexWrap:'wrap', gap:8, marginBottom:32 }}>
-                  {p.tags.map(t => (
-                    <span key={t} style={{ fontSize:12, padding:'4px 14px', borderRadius:20, border:'1px solid rgba(184,150,90,0.4)', color:'#B8965A', fontFamily:'var(--font-raleway)' }}>{t}</span>
-                  ))}
-                </div>
-
-                {/* CTAs */}
-                <div style={{ display:'flex', gap:14, flexWrap:'wrap' }}>
-                  <a
-                    href={BEDDY_URL}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    style={{ background:'#B8965A', color:'#0F0F0E', fontSize:12, fontWeight:600, letterSpacing:'0.18em', textTransform:'uppercase', padding:'15px 32px', textDecoration:'none', display:'inline-block', fontFamily:'var(--font-raleway)' }}
-                  >
-                    Verifica Disponibilità
-                  </a>
-                  <Link
-                    href={`/strutture/${p.slug}`}
-                    style={{ background:'transparent', color:'#F5F2EE', fontSize:12, fontWeight:500, letterSpacing:'0.18em', textTransform:'uppercase', padding:'15px 32px', textDecoration:'none', display:'inline-block', border:'1px solid rgba(245,242,238,0.25)', fontFamily:'var(--font-raleway)' }}
-                  >
-                    Scopri di più
-                  </Link>
-                </div>
-              </div>
-
             </div>
           )
         })}

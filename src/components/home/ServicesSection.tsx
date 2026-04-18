@@ -27,57 +27,59 @@ const proprietari = [
   { title:'Marketing Professionale', text:'Foto professionali, testi accattivanti e presenza sui migliori portali turistici.', img:'/images/og/04.jpg' },
 ]
 
-function ServiceCard({ s, delay, inView, fromLeft }: { s:typeof ospiti[0], delay:number, inView:boolean, fromLeft:boolean }) {
+function ServiceCard({ s, delay, inView, fromLeft }: { s: typeof ospiti[0]; delay: number; inView: boolean; fromLeft: boolean }) {
   return (
-    <div style={{
-      background:'#1a1917',
-      borderRadius:10,
-      overflow:'hidden',
-      opacity: inView ? 1 : 0,
-      transform: inView ? 'translateX(0)' : `translateX(${fromLeft ? '-60px' : '60px'})`,
-      transition: `opacity 0.7s ${delay}s, transform 0.7s ${delay}s`,
-    }}>
-      <div style={{ position:'relative', width:'100%', aspectRatio:'4/3', overflow:'hidden' }}>
-        <Image src={s.img} alt={s.title} fill unoptimized style={{ objectFit:'cover' }} />
-        <div style={{ position:'absolute', inset:0, background:'linear-gradient(to top, rgba(0,0,0,0.45) 0%, transparent 60%)', zIndex:1 }} />
+    <div
+      className="bg-[#1a1917] rounded-[10px] overflow-hidden"
+      style={{
+        opacity: inView ? 1 : 0,
+        transform: inView ? 'translateX(0)' : `translateX(${fromLeft ? '-60px' : '60px'})`,
+        transition: `opacity 0.7s ${delay}s, transform 0.7s ${delay}s`,
+      }}
+    >
+      <div className="relative w-full overflow-hidden" style={{ aspectRatio: '4/3' }}>
+        <Image src={s.img} alt={s.title} fill unoptimized className="object-cover" />
+        <div className="absolute inset-0 z-[1]" style={{ background: 'linear-gradient(to top, rgba(0,0,0,0.45) 0%, transparent 60%)' }} />
       </div>
-      <div style={{ padding:'18px 20px 22px' }}>
-        <div style={{ width:24, height:1, background:'#B8965A', marginBottom:12 }} />
-        <h3 style={{ fontFamily:'var(--font-playfair)', fontSize:16, fontWeight:400, color:'#F5F2EE', marginBottom:8, lineHeight:1.3 }}>{s.title}</h3>
-        <p style={{ fontSize:12, color:'rgba(245,242,238,0.5)', lineHeight:1.7, fontFamily:'var(--font-raleway)' }}>{s.text}</p>
+      <div className="px-5 pt-[18px] pb-[22px]">
+        <div className="w-6 h-px bg-[#B8965A] mb-3" />
+        <h3 className="font-playfair text-[16px] font-normal text-[#F5F2EE] mb-2 leading-[1.3]">{s.title}</h3>
+        <p className="text-[12px] text-[rgba(245,242,238,0.5)] leading-[1.7] font-raleway">{s.text}</p>
       </div>
     </div>
   )
 }
 
 function ServiceBlock({ tag, title, sub, services, bg, mirror }: {
-  tag:string, title:string, sub:string, services:typeof ospiti, bg:string, mirror:boolean
+  tag: string; title: string; sub: string; services: typeof ospiti; bg: string; mirror: boolean
 }) {
   const { ref, inView } = useInView()
 
   const textBlock = (
-    <div style={{
-      position:'sticky', top:120,
-      opacity: inView?1:0,
-      transform: inView?'translateY(0)':'translateY(30px)',
-      transition:'opacity 0.7s, transform 0.7s',
-    }}>
-      <p style={{ fontSize:10, fontWeight:600, letterSpacing:'0.35em', textTransform:'uppercase', color:'#B8965A', marginBottom:18 }}>{tag}</p>
-      <h2 style={{ fontFamily:'var(--font-playfair)', fontSize:'clamp(26px,2.8vw,42px)', fontWeight:400, lineHeight:1.2, color:'#F5F2EE', marginBottom:20 }}>{title}</h2>
-      <p style={{ fontSize:14, color:'rgba(245,242,238,0.5)', lineHeight:1.8, fontFamily:'var(--font-raleway)' }}>{sub}</p>
+    <div
+      className="md:sticky md:top-[120px]"
+      style={{
+        opacity: inView ? 1 : 0,
+        transform: inView ? 'translateY(0)' : 'translateY(30px)',
+        transition: 'opacity 0.7s, transform 0.7s',
+      }}
+    >
+      <p className="text-[10px] font-semibold tracking-[0.35em] uppercase text-[#B8965A] mb-[18px] font-raleway">{tag}</p>
+      <h2 className="font-playfair font-normal leading-[1.2] text-[#F5F2EE] mb-5 text-[clamp(26px,2.8vw,42px)]">{title}</h2>
+      <p className="text-[14px] text-[rgba(245,242,238,0.5)] leading-[1.8] font-raleway">{sub}</p>
     </div>
   )
 
-  // Layout sfalsato: colonna sx card 0,2 — colonna dx card 1,3 shiftata giù di 50%
+  /* On mobile: single column, all 4 cards stacked. On md+: 2-col staggered layout */
   const cardsBlock = (
-    <div style={{ display:'grid', gridTemplateColumns:'1fr 1fr', gap:20, alignItems:'start' }}>
-      {/* Colonna sinistra */}
-      <div style={{ display:'flex', flexDirection:'column', gap:20 }}>
+    <div className="grid grid-cols-1 sm:grid-cols-2 gap-5 items-start">
+      {/* Left column */}
+      <div className="flex flex-col gap-5">
         <ServiceCard s={services[0]} delay={0.1} inView={inView} fromLeft={!mirror} />
         <ServiceCard s={services[2]} delay={0.3} inView={inView} fromLeft={!mirror} />
       </div>
-      {/* Colonna destra — sfalsata verso il basso */}
-      <div style={{ display:'flex', flexDirection:'column', gap:20, marginTop:120 }}>
+      {/* Right column — offset down on md+ */}
+      <div className="flex flex-col gap-5 sm:mt-[120px]">
         <ServiceCard s={services[1]} delay={0.2} inView={inView} fromLeft={mirror} />
         <ServiceCard s={services[3]} delay={0.4} inView={inView} fromLeft={mirror} />
       </div>
@@ -85,14 +87,16 @@ function ServiceBlock({ tag, title, sub, services, bg, mirror }: {
   )
 
   return (
-    <section ref={ref} style={{ background:bg, padding:'110px 5%' }}>
-      <div style={{
-        display:'grid',
-        gridTemplateColumns: mirror ? '1.6fr 1fr' : '1fr 1.6fr',
-        gap:80,
-        alignItems:'start',
-      }}>
-        {mirror ? <>{cardsBlock}{textBlock}</> : <>{textBlock}{cardsBlock}</>}
+    <section ref={ref} className="px-[5%] py-[110px]" style={{ background: bg }}>
+      {/* Mobile: text first, then cards. md+: side-by-side (mirrored or not) */}
+      <div className={[
+        'flex flex-col gap-12 md:grid md:gap-20 md:items-start',
+        mirror ? 'md:grid-cols-[1.6fr_1fr]' : 'md:grid-cols-[1fr_1.6fr]',
+      ].join(' ')}>
+        {mirror
+          ? <>{cardsBlock}{textBlock}</>
+          : <>{textBlock}{cardsBlock}</>
+        }
       </div>
     </section>
   )
@@ -114,7 +118,7 @@ export default function ServicesSection() {
         title="Affidaci il tuo immobile e rilassati"
         sub="Massimizziamo i tuoi guadagni mentre gestiamo ogni aspetto della tua proprietà."
         services={proprietari}
-        bg="#111009"
+        bg="#0a0908"
         mirror={true}
       />
     </>

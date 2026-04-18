@@ -30,130 +30,156 @@ export default function ContattiClient() {
     setSending(false)
   }
 
-  const inputStyle: React.CSSProperties = {
-    width:'100%', padding:'14px 18px',
-    background:'rgba(245,242,238,0.05)',
-    border:'1px solid rgba(245,242,238,0.12)',
-    borderRadius:6, color:'#F5F2EE',
-    fontSize:14, fontFamily:'var(--font-raleway)',
-    outline:'none',
-    boxSizing: 'border-box',
-  }
+  const inputCls = [
+    'w-full px-[18px] py-[14px] rounded-[6px] text-[14px] text-[#F5F2EE] font-raleway outline-none',
+    'bg-[rgba(245,242,238,0.05)] border border-[rgba(245,242,238,0.12)]',
+    'focus:border-[rgba(184,150,90,0.5)] transition-colors duration-200',
+  ].join(' ')
 
-  const labelStyle: React.CSSProperties = {
-    fontSize:11, fontWeight:600, letterSpacing:'0.15em',
-    textTransform:'uppercase', color:'rgba(245,242,238,0.5)',
-    fontFamily:'var(--font-raleway)', marginBottom:8, display:'block',
-  }
+  const labelCls = 'block text-[11px] font-semibold tracking-[0.15em] uppercase text-[rgba(245,242,238,0.5)] font-raleway mb-2'
 
   return (
-    <main style={{ background:'#0F0F0E', minHeight:'100vh' }}>
+    <main className="bg-[#0F0F0E] min-h-screen">
 
       {/* Hero video */}
-      <div style={{ position:'relative', height:'60vh', minHeight:400, overflow:'hidden' }}>
-        <video autoPlay muted loop playsInline style={{ position:'absolute', inset:0, width:'100%', height:'100%', objectFit:'cover', zIndex:0 }}>
+      <div className="relative overflow-hidden" style={{ height: '60vh', minHeight: 360 }}>
+        <video autoPlay muted loop playsInline className="absolute inset-0 w-full h-full object-cover z-0">
           <source src="/videos/contatti.mp4" type="video/mp4" />
         </video>
-        <div style={{ position:'absolute', inset:0, background:'linear-gradient(to bottom, rgba(0,0,0,0.3) 0%, rgba(15,15,14,0.85) 100%)', zIndex:1 }} />
-        <div style={{ position:'absolute', inset:0, zIndex:2, display:'flex', flexDirection:'column', alignItems:'center', justifyContent:'center', textAlign:'center', padding:'0 5%' }}>
-          <p style={{ fontSize:11, fontWeight:600, letterSpacing:'0.35em', textTransform:'uppercase', color:'#B8965A', marginBottom:20, fontFamily:'var(--font-raleway)' }}>Kenekita</p>
-          <h1 style={{ fontFamily:'var(--font-playfair)', fontSize:'clamp(36px,6vw,72px)', fontWeight:400, color:'#F5F2EE', lineHeight:1.1, marginBottom:16 }}>Contattaci</h1>
-          <p style={{ fontSize:17, color:'rgba(245,242,238,0.65)', fontFamily:'var(--font-raleway)', fontWeight:300 }}>Siamo qui per rispondere a tutte le tue domande</p>
+        <div className="absolute inset-0 z-[1]"
+          style={{ background: 'linear-gradient(to bottom, rgba(0,0,0,0.3) 0%, rgba(15,15,14,0.85) 100%)' }} />
+        <div className="absolute inset-0 z-[2] flex flex-col items-center justify-center text-center px-[5%]">
+          <p className="text-[11px] font-semibold tracking-[0.35em] uppercase text-[#B8965A] mb-5 font-raleway">Kenekita</p>
+          <h1 className="font-playfair font-normal text-[#F5F2EE] leading-[1.1] mb-4 text-[clamp(32px,6vw,72px)]">
+            Contattaci
+          </h1>
+          <p className="text-[16px] md:text-[17px] text-[rgba(245,242,238,0.65)] font-raleway font-light">
+            Siamo qui per rispondere a tutte le tue domande
+          </p>
         </div>
       </div>
 
-      {/* Contenuto */}
-      <section style={{ padding:'100px 5%' }}>
-        <div style={{ display:'grid', gridTemplateColumns:'1fr 1.4fr', gap:80 }}>
+      {/* Content — mobile: info top, form below; md+: 2-col side by side */}
+      <section className="px-[5%] py-[80px] md:py-[100px]">
+        <div className="flex flex-col gap-12 md:grid md:grid-cols-[1fr_1.4fr] md:gap-20">
 
-          {/* Info contatti */}
-          <div>
-            <div style={{ marginBottom:48 }}>
-              <p style={{ fontSize:10, fontWeight:600, letterSpacing:'0.3em', textTransform:'uppercase', color:'#B8965A', marginBottom:12, fontFamily:'var(--font-raleway)' }}>Telefono</p>
-              <a href="tel:+393791502073" style={{ display:'block', fontSize:18, color:'#F5F2EE', textDecoration:'none', fontFamily:'var(--font-raleway)', marginBottom:4 }}>+39 379 150 2073</a>
-              <a href="tel:+393793061937" style={{ display:'block', fontSize:18, color:'#F5F2EE', textDecoration:'none', fontFamily:'var(--font-raleway)', marginBottom:8 }}>+39 379 306 1937</a>
-              <p style={{ fontSize:13, color:'rgba(245,242,238,0.4)', fontFamily:'var(--font-raleway)' }}>Lun-Ven: 9:00 - 19:00</p>
-            </div>
-
-            <div style={{ marginBottom:48 }}>
-              <p style={{ fontSize:10, fontWeight:600, letterSpacing:'0.3em', textTransform:'uppercase', color:'#B8965A', marginBottom:12, fontFamily:'var(--font-raleway)' }}>Email</p>
-              <a href="mailto:sardinia.g.service@tiscali.it" style={{ display:'block', fontSize:16, color:'#F5F2EE', textDecoration:'none', fontFamily:'var(--font-raleway)', marginBottom:8 }}>sardinia.g.service@tiscali.it</a>
-              <p style={{ fontSize:13, color:'rgba(245,242,238,0.4)', fontFamily:'var(--font-raleway)' }}>Risposta entro 24h</p>
-            </div>
-
-            <div style={{ marginBottom:48 }}>
-              <p style={{ fontSize:10, fontWeight:600, letterSpacing:'0.3em', textTransform:'uppercase', color:'#B8965A', marginBottom:12, fontFamily:'var(--font-raleway)' }}>Indirizzo</p>
-              <p style={{ fontSize:14, color:'rgba(245,242,238,0.7)', fontFamily:'var(--font-raleway)', lineHeight:1.7, marginBottom:4 }}>Sede legale: Via Gallura 10C, 07026 Olbia (SS)</p>
-              <p style={{ fontSize:14, color:'rgba(245,242,238,0.7)', fontFamily:'var(--font-raleway)', lineHeight:1.7 }}>Uff./Reception: Corso Vittorio Veneto 88a, Olbia (SS)</p>
+          {/* Info column */}
+          <div className="flex flex-col gap-10">
+            <div>
+              <p className="text-[10px] font-semibold tracking-[0.3em] uppercase text-[#B8965A] mb-3 font-raleway">Telefono</p>
+              <a href="tel:+393791502073" className="block text-[17px] md:text-[18px] text-[#F5F2EE] no-underline font-raleway mb-1 transition-colors hover:text-[#B8965A]">
+                +39 379 150 2073
+              </a>
+              <a href="tel:+393793061937" className="block text-[17px] md:text-[18px] text-[#F5F2EE] no-underline font-raleway mb-2 transition-colors hover:text-[#B8965A]">
+                +39 379 306 1937
+              </a>
+              <p className="text-[13px] text-[rgba(245,242,238,0.4)] font-raleway">Lun-Ven: 9:00 - 19:00</p>
             </div>
 
             <div>
-              <p style={{ fontSize:10, fontWeight:600, letterSpacing:'0.3em', textTransform:'uppercase', color:'#B8965A', marginBottom:12, fontFamily:'var(--font-raleway)' }}>Orari</p>
-              <p style={{ fontSize:14, color:'rgba(245,242,238,0.7)', fontFamily:'var(--font-raleway)', lineHeight:1.7 }}>Lun-Ven: 9:00 - 18:00</p>
-              <p style={{ fontSize:14, color:'rgba(245,242,238,0.7)', fontFamily:'var(--font-raleway)', lineHeight:1.7 }}>Sab-Dom: su appuntamento</p>
+              <p className="text-[10px] font-semibold tracking-[0.3em] uppercase text-[#B8965A] mb-3 font-raleway">Email</p>
+              <a href="mailto:sardinia.g.service@tiscali.it" className="block text-[15px] md:text-[16px] text-[#F5F2EE] no-underline font-raleway mb-2 transition-colors hover:text-[#B8965A]">
+                sardinia.g.service@tiscali.it
+              </a>
+              <p className="text-[13px] text-[rgba(245,242,238,0.4)] font-raleway">Risposta entro 24h</p>
+            </div>
+
+            <div>
+              <p className="text-[10px] font-semibold tracking-[0.3em] uppercase text-[#B8965A] mb-3 font-raleway">Indirizzo</p>
+              <p className="text-[14px] text-[rgba(245,242,238,0.7)] font-raleway leading-[1.7] mb-1">
+                Sede legale: Via Gallura 10C, 07026 Olbia (SS)
+              </p>
+              <p className="text-[14px] text-[rgba(245,242,238,0.7)] font-raleway leading-[1.7]">
+                Uff./Reception: Corso Vittorio Veneto 88a, Olbia (SS)
+              </p>
+            </div>
+
+            <div>
+              <p className="text-[10px] font-semibold tracking-[0.3em] uppercase text-[#B8965A] mb-3 font-raleway">Orari</p>
+              <p className="text-[14px] text-[rgba(245,242,238,0.7)] font-raleway leading-[1.7]">Lun-Ven: 9:00 - 18:00</p>
+              <p className="text-[14px] text-[rgba(245,242,238,0.7)] font-raleway leading-[1.7]">Sab-Dom: su appuntamento</p>
             </div>
           </div>
 
-          {/* Form */}
-          <div style={{ background:'#141412', padding:'52px 48px', borderRadius:10 }}>
-            <h2 style={{ fontFamily:'var(--font-playfair)', fontSize:32, fontWeight:400, color:'#F5F2EE', marginBottom:36, lineHeight:1.2 }}>Inviaci un Messaggio</h2>
+          {/* Form card */}
+          <div className="bg-[#141412] px-6 py-10 md:px-12 md:py-[52px] rounded-[10px]">
+            <h2 className="font-playfair text-[28px] md:text-[32px] font-normal text-[#F5F2EE] mb-9 leading-[1.2]">
+              Inviaci un Messaggio
+            </h2>
 
             {sent ? (
-              <div style={{ textAlign:'center', padding:'60px 0' }}>
-                <div style={{ width:48, height:48, borderRadius:'50%', background:'rgba(184,150,90,0.15)', border:'1px solid #B8965A', display:'flex', alignItems:'center', justifyContent:'center', margin:'0 auto 24px' }}>
-                  <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#B8965A" strokeWidth="2.5"><path d="M20 6L9 17l-5-5"/></svg>
+              <div className="text-center py-16">
+                <div className="w-12 h-12 rounded-full bg-[rgba(184,150,90,0.15)] border border-[#B8965A] flex items-center justify-center mx-auto mb-6">
+                  <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#B8965A" strokeWidth="2.5">
+                    <path d="M20 6L9 17l-5-5"/>
+                  </svg>
                 </div>
-                <h3 style={{ fontFamily:'var(--font-playfair)', fontSize:24, fontWeight:400, color:'#F5F2EE', marginBottom:12 }}>Messaggio inviato</h3>
-                <p style={{ fontSize:15, color:'rgba(245,242,238,0.55)', fontFamily:'var(--font-raleway)' }}>Ti risponderemo entro 24 ore.</p>
+                <h3 className="font-playfair text-[24px] font-normal text-[#F5F2EE] mb-3">Messaggio inviato</h3>
+                <p className="text-[15px] text-[rgba(245,242,238,0.55)] font-raleway">Ti risponderemo entro 24 ore.</p>
               </div>
             ) : (
-              <form onSubmit={submit}>
-                <div style={{ display:'grid', gridTemplateColumns:'1fr 1fr', gap:20, marginBottom:20 }}>
+              <form onSubmit={submit} className="flex flex-col gap-5">
+                {/* Nome + Email */}
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-5">
                   <div>
-                    <label style={labelStyle}>Nome *</label>
-                    <input name="nome" value={form.nome} onChange={handle} required style={inputStyle} placeholder="Mario Rossi" />
+                    <label className={labelCls}>Nome *</label>
+                    <input name="nome" value={form.nome} onChange={handle} required className={inputCls} placeholder="Mario Rossi" />
                   </div>
                   <div>
-                    <label style={labelStyle}>Email *</label>
-                    <input name="email" type="email" value={form.email} onChange={handle} required style={inputStyle} placeholder="mario@email.com" />
+                    <label className={labelCls}>Email *</label>
+                    <input name="email" type="email" value={form.email} onChange={handle} required className={inputCls} placeholder="mario@email.com" />
                   </div>
                 </div>
 
-                <div style={{ marginBottom:20 }}>
-                  <label style={labelStyle}>Oggetto *</label>
-                  <input name="oggetto" value={form.oggetto} onChange={handle} required style={inputStyle} placeholder="Come possiamo aiutarti?" />
+                {/* Oggetto */}
+                <div>
+                  <label className={labelCls}>Oggetto *</label>
+                  <input name="oggetto" value={form.oggetto} onChange={handle} required className={inputCls} placeholder="Come possiamo aiutarti?" />
                 </div>
 
-                <div style={{ marginBottom:28 }}>
-                  <label style={labelStyle}>Messaggio *</label>
-                  <textarea name="messaggio" value={form.messaggio} onChange={handle} required rows={5} style={{ ...inputStyle, resize:'vertical' }} placeholder="Scrivi il tuo messaggio..." />
+                {/* Messaggio */}
+                <div>
+                  <label className={labelCls}>Messaggio *</label>
+                  <textarea
+                    name="messaggio" value={form.messaggio} onChange={handle} required rows={5}
+                    className={`${inputCls} resize-y`}
+                    placeholder="Scrivi il tuo messaggio..."
+                  />
                 </div>
 
                 {/* GDPR */}
-                <div style={{ marginBottom:16 }}>
-                  <label style={{ display:'flex', gap:12, alignItems:'flex-start', cursor:'pointer' }}>
-                    <input type="checkbox" name="gdpr1" checked={form.gdpr1} onChange={handle} style={{ marginTop:3, flexShrink:0, accentColor:'#B8965A' }} />
-                    <span style={{ fontSize:12, color:'rgba(245,242,238,0.5)', fontFamily:'var(--font-raleway)', lineHeight:1.6 }}>
-                      Acconsento al trattamento dei miei dati e dichiaro di aver preso visione della <a href="/privacy-policy" style={{ color:'#B8965A', textDecoration:'none' }}>Privacy Policy</a> *
-                    </span>
-                  </label>
-                </div>
+                <label className="flex gap-3 items-start cursor-pointer">
+                  <input
+                    type="checkbox" name="gdpr1" checked={form.gdpr1} onChange={handle}
+                    className="mt-[3px] flex-shrink-0 accent-[#B8965A]"
+                  />
+                  <span className="text-[12px] text-[rgba(245,242,238,0.5)] font-raleway leading-[1.6]">
+                    Acconsento al trattamento dei miei dati e dichiaro di aver preso visione della{' '}
+                    <a href="/privacy-policy" className="text-[#B8965A] no-underline">Privacy Policy</a> *
+                  </span>
+                </label>
 
-                <div style={{ marginBottom:32 }}>
-                  <label style={{ display:'flex', gap:12, alignItems:'flex-start', cursor:'pointer' }}>
-                    <input type="checkbox" name="gdpr2" checked={form.gdpr2} onChange={handle} style={{ marginTop:3, flexShrink:0, accentColor:'#B8965A' }} />
-                    <span style={{ fontSize:12, color:'rgba(245,242,238,0.5)', fontFamily:'var(--font-raleway)', lineHeight:1.6 }}>
-                      Acconsento al trattamento dei miei dati personali per attività di marketing, newsletter e informazioni promozionali
-                    </span>
-                  </label>
-                </div>
+                <label className="flex gap-3 items-start cursor-pointer">
+                  <input
+                    type="checkbox" name="gdpr2" checked={form.gdpr2} onChange={handle}
+                    className="mt-[3px] flex-shrink-0 accent-[#B8965A]"
+                  />
+                  <span className="text-[12px] text-[rgba(245,242,238,0.5)] font-raleway leading-[1.6]">
+                    Acconsento al trattamento dei miei dati personali per attività di marketing, newsletter e informazioni promozionali
+                  </span>
+                </label>
 
-                {error && <p style={{ fontSize:13, color:'#E24B4A', marginBottom:16, fontFamily:'var(--font-raleway)' }}>{error}</p>}
+                {error && (
+                  <p className="text-[13px] text-[#E24B4A] font-raleway">{error}</p>
+                )}
 
                 <button
                   type="submit"
                   disabled={sending}
-                  style={{ width:'100%', background: sending ? 'rgba(184,150,90,0.5)' : '#B8965A', color:'#0F0F0E', fontSize:12, fontWeight:600, letterSpacing:'0.2em', textTransform:'uppercase', padding:'16px 32px', border:'none', borderRadius:6, cursor: sending ? 'not-allowed' : 'pointer', fontFamily:'var(--font-raleway)' }}
+                  className={[
+                    'w-full text-[#0F0F0E] text-[12px] font-semibold tracking-[0.2em] uppercase py-4 border-none rounded-[6px] font-raleway transition-opacity',
+                    sending ? 'bg-[rgba(184,150,90,0.5)] cursor-not-allowed' : 'bg-[#B8965A] cursor-pointer hover:opacity-90',
+                  ].join(' ')}
                 >
                   {sending ? 'Invio in corso...' : 'Invia Messaggio'}
                 </button>
