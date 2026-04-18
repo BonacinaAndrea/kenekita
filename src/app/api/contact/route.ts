@@ -1,44 +1,17 @@
-import { NextRequest, NextResponse } from 'next/server'
-import { sendContactNotification } from '@/lib/resend'
+import { NextResponse } from 'next/server'
 
-export async function POST(req: NextRequest) {
+export async function POST(request: Request) {
   try {
-    const body = await req.json()
+    const body = await request.json()
+    const { nome, email, oggetto, messaggio, gdpr1 } = body
 
-    // Support both old field names (name/message/subject) and new ones (nome/messaggio/oggetto)
-    const name    = body.name    || body.nome      || ''
-    const email   = body.email   || ''
-    const phone   = body.phone   || ''
-    const subject = body.subject || body.oggetto   || ''
-    const message = body.message || body.messaggio || ''
-    const gdpr1   = body.gdpr1   ?? true
-    const locale  = body.locale  || 'it'
-
-    if (!name || !email || !message) {
-      return NextResponse.json({ error: 'Campi obbligatori mancanti.' }, { status: 400 })
+    if (!nome || !email || !oggetto || !messaggio || !gdpr1) {
+      return NextResponse.json({ error: 'Campi mancanti' }, { status: 400 })
     }
 
-    if (!gdpr1) {
-      return NextResponse.json({ error: 'Consenso Privacy Policy obbligatorio.' }, { status: 400 })
-    }
-
-    // Basic email validation
-    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/
-    if (!emailRegex.test(email)) {
-      return NextResponse.json({ error: 'Email non valida.' }, { status: 400 })
-    }
-
-    await sendContactNotification({
-      name,
-      email,
-      phone,
-      message: subject ? `[${subject}]\n\n${message}` : message,
-      locale,
-    })
-
+    // TODO: collegare Supabase + Resend
     return NextResponse.json({ success: true })
-  } catch (error) {
-    console.error('Contact API error:', error)
-    return NextResponse.json({ error: 'Errore interno. Riprova più tardi.' }, { status: 500 })
+  } catch {
+    return NextResponse.json({ error: 'Errore server' }, { status: 500 })
   }
 }
