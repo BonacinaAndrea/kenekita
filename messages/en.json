@@ -1,0 +1,17 @@
+{
+  "common": {
+    "siteName": "Kenekita",
+    "tagline": "Co-hosting & property management for tourist rentals in Sardinia"
+  },
+  "nav": {
+    "home": "Home",
+    "properties": "Properties",
+    "about": "About Us",
+    "owners": "Owners",
+    "blog": "Blog",
+    "contact": "Contact"
+  },
+  "footer": {
+    "rights": "All rights reserved"
+  }
+}

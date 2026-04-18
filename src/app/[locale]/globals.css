@@ -1,0 +1,15 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+* { margin: 0; padding: 0; box-sizing: border-box; }
+html { scroll-behavior: smooth; }
+body {
+  background: #0F0F0E;
+  color: #F5F2EE;
+  font-family: var(--font-raleway), sans-serif;
+  font-weight: 300;
+}
+h1, h2, h3, h4 {
+  font-family: var(--font-playfair), serif;
+}

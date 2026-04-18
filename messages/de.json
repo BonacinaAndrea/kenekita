@@ -1,0 +1,17 @@
+{
+  "common": {
+    "siteName": "Kenekita",
+    "tagline": "Co-Hosting und Immobilienverwaltung für Ferienvermietungen auf Sardinien"
+  },
+  "nav": {
+    "home": "Startseite",
+    "properties": "Immobilien",
+    "about": "Über Uns",
+    "owners": "Eigentümer",
+    "blog": "Blog",
+    "contact": "Kontakt"
+  },
+  "footer": {
+    "rights": "Alle Rechte vorbehalten"
+  }
+}

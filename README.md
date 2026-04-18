@@ -1,36 +1,85 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Kenekita - Co-hosting & Property Management
 
-## Getting Started
+Sito web per la gestione di affitti turistici in Sardegna.
 
-First, run the development server:
+## Stack Tecnologico
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+- **Framework**: Next.js 14 (App Router) + TypeScript
+- **Internazionalizzazione**: next-intl (5 lingue: it, en, es, fr, de)
+- **Styling**: Tailwind CSS
+- **Animazioni**: Framer Motion
+- **CMS**: Sanity (Visual Editing + Live Preview)
+- **Database**: Supabase (contact_requests + booking_requests)
+- **Email**: Resend
+- **Deploy**: Vercel
+
+## Struttura del Progetto
+
+```
+kenekita/
+├── src/
+│   ├── app/
+│   │   └── [locale]/          # Routing internazionale
+│   ├── components/            # Componenti React
+│   ├── i18n/                  # Configurazione next-intl
+│   ├── lib/                   # Utility e client (Sanity, Supabase, Resend)
+│   └── middleware.ts          # Middleware next-intl
+├── messages/                  # File di traduzione JSON
+├── public/
+│   ├── images/               # Immagini statiche
+│   └── videos/               # Video hero
+└── .env.local                # Variabili d'ambiente
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+## Setup Locale
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+1. Installa le dipendenze:
+```bash
+npm install
+```
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+2. Configura le variabili d'ambiente in `.env.local`:
+   - Sanity CMS credentials
+   - Supabase URL e keys
+   - Resend API key
 
-## Learn More
+3. Avvia il server di sviluppo:
+```bash
+npm run dev
+```
 
-To learn more about Next.js, take a look at the following resources:
+4. Apri [http://localhost:3000](http://localhost:3000)
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+## Lingue Supportate
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+- 🇮🇹 Italiano (default)
+- 🇬🇧 English
+- 🇪🇸 Español
+- 🇫🇷 Français
+- 🇩🇪 Deutsch
 
-## Deploy on Vercel
+## Routing
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+Tutte le route sono prefissate con il locale:
+- `/it` - Italiano
+- `/en` - English
+- `/es` - Español
+- `/fr` - Français
+- `/de` - Deutsch
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+## Deploy su Vercel
+
+1. Connetti il repository a Vercel
+2. Configura le variabili d'ambiente
+3. Deploy automatico ad ogni push su main
+
+## Strutture Disponibili
+
+- Villa I Lecci
+- Gardenia Luxury
+- Dream The Sea
+- Haven of Harbour
+- Sunset Blu House
+- Maison des Arches
+- Dream on the Sea Stintino
+- Profumo di Sardegna

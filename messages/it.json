@@ -1,0 +1,17 @@
+{
+  "common": {
+    "siteName": "Kenekita",
+    "tagline": "Co-hosting & property management affitti turistici Sardegna"
+  },
+  "nav": {
+    "home": "Home",
+    "properties": "Strutture",
+    "about": "Chi Siamo",
+    "owners": "Proprietari",
+    "blog": "Blog",
+    "contact": "Contatti"
+  },
+  "footer": {
+    "rights": "Tutti i diritti riservati"
+  }
+}

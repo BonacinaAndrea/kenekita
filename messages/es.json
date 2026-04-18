@@ -1,0 +1,17 @@
+{
+  "common": {
+    "siteName": "Kenekita",
+    "tagline": "Co-hosting y gestión de propiedades para alquileres turísticos en Cerdeña"
+  },
+  "nav": {
+    "home": "Inicio",
+    "properties": "Propiedades",
+    "about": "Sobre Nosotros",
+    "owners": "Propietarios",
+    "blog": "Blog",
+    "contact": "Contacto"
+  },
+  "footer": {
+    "rights": "Todos los derechos reservados"
+  }
+}
